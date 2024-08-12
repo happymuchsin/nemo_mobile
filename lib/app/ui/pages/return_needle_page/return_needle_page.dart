@@ -28,11 +28,11 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
           halaman: 'return-needle',
         ),
         body: Container(
-          padding: const EdgeInsets.all(30),
+          padding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                headerFile('User'),
+                headerFile('User', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -46,7 +46,7 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                     ),
                   ],
                 ),
-                headerFile('Information'),
+                headerFile('Information', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -57,7 +57,7 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                     ),
                   ],
                 ),
-                headerFile('Box'),
+                headerFile('Box', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -68,7 +68,7 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                     ),
                   ],
                 ),
-                headerFile('Needle'),
+                headerFile('Needle', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -82,16 +82,13 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: btn(
-                      type: 'row',
-                      onPressed: () => controller.scanBoxCard(),
-                      isIcon: true,
-                      icon: FontAwesomeIcons.floppyDisk,
-                      isText: true,
-                      text: 'Submit'),
-                ),
+                btn(
+                    type: 'row',
+                    onPressed: () => controller.scanBoxCard(),
+                    isIcon: true,
+                    icon: FontAwesomeIcons.floppyDisk,
+                    isText: true,
+                    text: 'Submit'),
               ],
             ),
           ),

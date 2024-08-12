@@ -11,6 +11,19 @@ late AwesomeDialog xdialog;
 XFile? globalImage;
 final ImagePicker picker = ImagePicker();
 
+iconBtn({VoidCallback? onPressed, double? iconSize, IconData? icon, Color? color}) {
+  return IconButton(
+    constraints: const BoxConstraints(),
+    style: const ButtonStyle(
+      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+    ),
+    onPressed: onPressed,
+    icon: Icon(icon),
+    color: color,
+    iconSize: iconSize,
+  );
+}
+
 exBtn(
     {flex = 1,
     VoidCallback? onPressed,
@@ -104,11 +117,11 @@ iconClick(routename, tipe, source, name, {argument}) {
       decoration: iconBoxDecor(),
       child: Column(
         children: [
-          const SizedBox(
-            height: 30,
-          ),
+          // const SizedBox(
+          //   height: 30,
+          // ),
           IconButton(
-            iconSize: getDevice() == 'tablet' ? 50 : 20,
+            iconSize: getDevice() == 'tablet' ? 100 : 40,
             color: Colors.white,
             onPressed: () async {
               pindahRespon(routename, argument);
@@ -116,8 +129,8 @@ iconClick(routename, tipe, source, name, {argument}) {
             icon: tipe == 'image'
                 ? Image.asset(
                     source,
-                    height: getDevice() == 'tablet' ? 100 : 20,
-                    width: getDevice() == 'tablet' ? 100 : 20,
+                    height: getDevice() == 'tablet' ? 100 : 40,
+                    width: getDevice() == 'tablet' ? 100 : 40,
                   )
                 : Icon(source),
           ),

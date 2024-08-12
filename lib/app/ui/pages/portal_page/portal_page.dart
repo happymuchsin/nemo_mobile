@@ -16,7 +16,9 @@ class PortalPage extends GetView<PortalController> {
         halaman: 'dashboard',
       ),
       body: Container(
-        margin: EdgeInsets.fromLTRB(Get.width * .1, Get.height * .1, Get.width * .1, Get.height * .1),
+        margin: controller.deviceType.value == 'tablet'
+            ? EdgeInsets.fromLTRB(Get.width * .1, Get.height * .1, Get.width * .1, Get.height * .1)
+            : EdgeInsets.fromLTRB(Get.width * .05, Get.height * .05, Get.width * .05, Get.height * .05),
         decoration: BoxDecoration(
           border: Border.all(color: Colors.black),
           borderRadius: BorderRadius.circular(5),
@@ -28,7 +30,7 @@ class PortalPage extends GetView<PortalController> {
               crossAxisCount: 3,
               crossAxisSpacing: 4.0,
               mainAxisSpacing: 4.0,
-              mainAxisExtent: controller.deviceType.value == 'tablet' ? 225 : 140,
+              mainAxisExtent: controller.deviceType.value == 'tablet' ? 225 : 120,
             ),
             itemCount: controller.dataModel.where((e) => e.visible == true).length,
             // itemCount: controller.dataModel.length,

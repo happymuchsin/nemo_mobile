@@ -33,7 +33,7 @@ class ApprovalPage extends GetView<ApprovalController> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.fromLTRB(Get.width * .88, 0, 0, 0),
+                padding: EdgeInsets.fromLTRB(Get.width * .83, 0, 0, 0),
                 child: btn(type: 'row', onPressed: () => controller.getData(), isIcon: true, icon: FontAwesomeIcons.rotateLeft),
               ),
               focusScan(
@@ -68,8 +68,8 @@ class ApprovalPage extends GetView<ApprovalController> {
                             child: Row(
                               children: [
                                 Container(
-                                  width: 75,
-                                  height: 75,
+                                  width: controller.deviceType.value == 'tablet' ? 75 : 40,
+                                  height: controller.deviceType.value == 'tablet' ? 75 : 40,
                                   decoration: const BoxDecoration(
                                     shape: BoxShape.circle,
                                     gradient: LinearGradient(
@@ -81,7 +81,7 @@ class ApprovalPage extends GetView<ApprovalController> {
                                   child: Center(
                                     child: Text(
                                       getInitials(data.name.toString()),
-                                      style: const TextStyle(color: Colors.white, fontSize: 35),
+                                      style: TextStyle(color: Colors.white, fontSize: controller.deviceType.value == 'tablet' ? 35 : 12),
                                     ),
                                   ),
                                 ),
@@ -93,11 +93,11 @@ class ApprovalPage extends GetView<ApprovalController> {
                                   children: [
                                     Text(
                                       data.name.toString(),
-                                      style: const TextStyle(fontSize: 30, fontWeight: FontWeight.bold),
+                                      style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 30 : 18, fontWeight: FontWeight.bold),
                                     ),
                                     Text(
                                       data.username.toString(),
-                                      style: const TextStyle(fontSize: 20),
+                                      style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12),
                                     ),
                                   ],
                                 )
@@ -110,13 +110,13 @@ class ApprovalPage extends GetView<ApprovalController> {
                               children: [
                                 Text(
                                   data.status.toString().toUpperCase(),
-                                  style: const TextStyle(fontSize: 30),
+                                  style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 30 : 20),
                                 ),
                                 const SizedBox(
                                   width: 20,
                                 ),
                                 SizedBox(
-                                  height: 75,
+                                  height: controller.deviceType.value == 'tablet' ? 75 : 40,
                                   child: btn(
                                       type: 'row',
                                       onPressed: () => controller.btnStatus(
@@ -136,8 +136,8 @@ class ApprovalPage extends GetView<ApprovalController> {
                                           data.gambar),
                                       isIcon: true,
                                       icon: FontAwesomeIcons.barcode,
-                                      fontSize: 30,
-                                      iconSize: 50),
+                                      fontSize: controller.deviceType.value == 'tablet' ? 30 : 12,
+                                      iconSize: controller.deviceType.value == 'tablet' ? 50 : 28),
                                 ),
                               ],
                             ),

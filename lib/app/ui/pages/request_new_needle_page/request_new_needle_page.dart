@@ -30,11 +30,11 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
           halaman: 'request-new-needle',
         ),
         body: Container(
-          padding: const EdgeInsets.all(30),
+          padding: controller.deviceType.value == 'tablet' ? const EdgeInsets.all(30) : const EdgeInsets.all(0),
           child: SingleChildScrollView(
             child: Column(
               children: [
-                headerFile('User'),
+                headerFile('User', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -48,7 +48,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                     ),
                   ],
                 ),
-                headerFile('Select'),
+                headerFile('Select', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Obx(
@@ -56,7 +56,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           child: DropdownButtonFormField2(
-                            style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                            style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
                             isExpanded: true,
                             decoration: wxInputDecoration(text: 'Line'),
                             value: controller.sLine.value.isNotEmpty ? controller.sLine.value : null,
@@ -88,7 +88,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                         child: Container(
                           padding: const EdgeInsets.all(10),
                           child: DropdownButtonFormField2(
-                            style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                            style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
                             isExpanded: true,
                             decoration: wxInputDecoration(text: 'Style'),
                             value: controller.sStyle.value.isNotEmpty ? controller.sStyle.value : null,
@@ -117,7 +117,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                     ),
                   ],
                 ),
-                headerFile('Needle'),
+                headerFile('Needle', paddingTop: 0, paddingBottom: 0),
                 Row(
                   children: [
                     Expanded(
@@ -134,16 +134,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                     ),
                   ],
                 ),
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: btn(
-                      type: 'row',
-                      onPressed: () => controller.submit(),
-                      isIcon: true,
-                      icon: FontAwesomeIcons.floppyDisk,
-                      isText: true,
-                      text: 'Submit'),
-                ),
+                btn(type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'Submit'),
               ],
             ),
           ),

@@ -7,9 +7,16 @@ import 'package:intl/intl.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/utils/global_context.dart';
 
-headerFile(text, {double fontSize = 20}) {
+headerFile(
+  text, {
+  double fontSize = 20,
+  double paddingLeft = 10,
+  double paddingTop = 10,
+  double paddingRight = 10,
+  double paddingBottom = 10,
+}) {
   return Container(
-    margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+    margin: EdgeInsets.fromLTRB(paddingLeft, paddingTop, paddingRight, paddingBottom),
     child: Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -81,7 +88,7 @@ inputForm(
     if (getDevice() == 'tablet') {
       labelFontSize = 30;
     } else {
-      labelFontSize = 20;
+      labelFontSize = 18;
     }
   }
 
@@ -89,7 +96,7 @@ inputForm(
     if (getDevice() == 'tablet') {
       fontSize = 20;
     } else {
-      fontSize = 14;
+      fontSize = 12;
     }
   }
   return Container(
@@ -172,6 +179,7 @@ inputForm(
             }
           : onTap,
       decoration: InputDecoration(
+        contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
         floatingLabelBehavior: floatingLabelBehavior,
         floatingLabelAlignment: isFloatingAlign ? floatingAlign : FloatingLabelAlignment.start,
         labelText: text,

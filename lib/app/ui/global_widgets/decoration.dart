@@ -8,10 +8,11 @@ InputDecoration wxInputDecoration({required text, double labelFontSize = 0, isVa
     if (getDevice() == 'tablet') {
       labelFontSize = 30;
     } else {
-      labelFontSize = 20;
+      labelFontSize = 18;
     }
   }
   return InputDecoration(
+    contentPadding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
     labelText: text,
     labelStyle: TextStyle(fontSize: labelFontSize),
     enabledBorder: OutlineInputBorder(

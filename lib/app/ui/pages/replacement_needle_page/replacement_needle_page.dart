@@ -60,19 +60,19 @@ class ReplacementNeedlePage extends GetView<ReplacementNeedleController> {
                           Image.memory(
                             base64Decode(controller.lemparan[0]['gambar']),
                             fit: BoxFit.contain,
-                            width: controller.deviceType.value == 'tablet' ? 400 : 100,
-                            height: controller.deviceType.value == 'tablet' ? 400 : 100,
+                            width: controller.deviceType.value == 'tablet' ? 400 : 150,
+                            height: controller.deviceType.value == 'tablet' ? 400 : 150,
                           ),
                           SizedBox(
                             width: controller.deviceType.value == 'tablet' ? 400 : 100,
                             child: Text(
                               controller.tulisan[index],
-                              style: const TextStyle(fontSize: 30),
+                              style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 30 : 12),
                               textAlign: TextAlign.center,
                             ),
                           ),
                           Transform.scale(
-                            scale: 2,
+                            scale: controller.deviceType.value == 'tablet' ? 2 : 1,
                             child: Checkbox(
                               shape: const CircleBorder(),
                               value: controller.selectedCheckboxIndex.value == index,
@@ -88,10 +88,12 @@ class ReplacementNeedlePage extends GetView<ReplacementNeedleController> {
                 },
               ),
             ),
-            const SizedBox(
-              height: 30,
+            Container(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+              child: btn(
+                  type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'SUBMIT'),
             ),
-            btn(type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'SUBMIT'),
           ],
         ),
       ),

@@ -28,11 +28,11 @@ class NeedleStockPage extends GetView<NeedleStockController> {
         ),
         body: SingleChildScrollView(
           child: Container(
-            padding: const EdgeInsets.all(30),
+            padding: const EdgeInsets.fromLTRB(30, 10, 30, 10),
             child: Column(
               children: [
                 Container(
-                  padding: EdgeInsets.fromLTRB(Get.width * .88, 0, 0, 0),
+                  padding: EdgeInsets.fromLTRB(Get.width * .83, 0, 0, 0),
                   child: btn(type: 'row', onPressed: () => controller.getData(), isIcon: true, icon: FontAwesomeIcons.rotateLeft),
                 ),
                 FutureBuilder(
@@ -57,7 +57,7 @@ class NeedleStockPage extends GetView<NeedleStockController> {
                             );
                           } else {
                             return PaginatedDataTable(
-                              columnSpacing: Get.width * .18,
+                              columnSpacing: controller.deviceType.value == 'tablet' ? Get.width * .18 : Get.width * .13,
                               columns: const [
                                 DataColumn(label: Text('Box Name')),
                                 DataColumn(label: Text('Brand')),

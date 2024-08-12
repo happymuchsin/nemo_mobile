@@ -12,7 +12,7 @@ import 'package:nemo/app/ui/utils/local_data.dart';
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
   const ViewAppBar({super.key, title, halaman})
-      : preferredSize = const Size.fromHeight(kToolbarHeight + 30),
+      : preferredSize = const Size.fromHeight(kToolbarHeight),
         judul = title,
         page = halaman;
 
@@ -98,19 +98,54 @@ class _ViewAppBarState extends State<ViewAppBar> {
     return AppBar(
       backgroundColor: const Color(0xFF2A6689),
       foregroundColor: Colors.white,
-      toolbarHeight: kToolbarHeight + 30,
+      toolbarHeight: kToolbarHeight,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            widget.judul.toString(),
+          SizedBox(
+            width: Get.width * .2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.judul.toString(),
+                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                ),
+              ],
+            ),
           ),
-          Text("$area - $lokasi"),
-          Column(
-            children: [
-              Text(mode != 'live' ? "${mode.toString().toUpperCase()} ${name.toString()}" : name.toString()),
-              Text(username.toString()),
-            ],
+          SizedBox(
+            width: Get.width * .3,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  area.toString(),
+                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                ),
+                Text(
+                  lokasi.toString(),
+                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            width: Get.width * .2,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
+              children: [
+                // Text(mode != 'live' ? "${mode.toString().toUpperCase()} ${name.toString()}" : name.toString()),
+                Text(
+                  name.toString(),
+                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                ),
+                Text(
+                  username.toString(),
+                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                ),
+              ],
+            ),
           ),
         ],
       ),

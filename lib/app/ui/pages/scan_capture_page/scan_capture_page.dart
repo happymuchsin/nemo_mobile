@@ -37,11 +37,12 @@ class ScanCapturePage extends GetView<ScanCaptureController> {
             }
             return Column(
               children: [
+                if (controller.deviceType.value == 'tablet')
+                  SizedBox(
+                    height: Get.height * .01,
+                  ),
                 SizedBox(
-                  height: Get.height * .01,
-                ),
-                SizedBox(
-                  height: Get.height * .05,
+                  height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
                   width: Get.width * .75,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
@@ -61,7 +62,7 @@ class ScanCapturePage extends GetView<ScanCaptureController> {
                   height: Get.height * .01,
                 ),
                 SizedBox(
-                  height: Get.height * .75,
+                  height: controller.deviceType.value == 'tablet' ? Get.height * .7 : Get.height * .65,
                   width: Get.width * .75,
                   child: CameraPreview(controller.cameraController),
                 ),
@@ -69,7 +70,7 @@ class ScanCapturePage extends GetView<ScanCaptureController> {
                   height: Get.height * .01,
                 ),
                 SizedBox(
-                  height: Get.height * .05,
+                  height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
                   child: !controller.captured.value
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,

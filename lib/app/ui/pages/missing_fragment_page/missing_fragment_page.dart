@@ -27,7 +27,7 @@ class MissingFragmentPage extends GetView<MissingFragmentController> {
           halaman: 'missing-fragment',
         ),
         body: Container(
-          padding: const EdgeInsets.all(30),
+          padding: controller.deviceType.value == 'tablet' ? const EdgeInsets.all(30) : const EdgeInsets.fromLTRB(20, 0, 20, 0),
           child: Column(
             children: [
               const Text(

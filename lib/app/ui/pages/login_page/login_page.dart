@@ -25,23 +25,23 @@ class LoginPage extends GetView<LoginController> {
           child: Form(
             key: GlobalService.formKey,
             child: ListView(
-              padding: const EdgeInsets.fromLTRB(20, 20, 20, 0),
+              padding: controller.deviceType.value == 'tablet' ? const EdgeInsets.fromLTRB(20, 20, 20, 0) : const EdgeInsets.all(0),
               children: [
                 Container(
                   margin: EdgeInsets.only(top: MediaQuery.of(context).padding.top + 20),
                   child: Image.asset(
                     'assets/img/logo.png',
-                    width: 300,
-                    height: 300,
+                    width: controller.deviceType.value == 'tablet' ? 300 : 150,
+                    height: controller.deviceType.value == 'tablet' ? 300 : 150,
                   ),
                 ),
-                const SizedBox(
-                  height: 40,
+                SizedBox(
+                  height: controller.deviceType.value == 'tablet' ? 40 : 0,
                 ),
                 Column(
                   children: [
                     Container(
-                      margin: EdgeInsets.fromLTRB(Get.width * .35, 20, Get.width * .35, 0),
+                      margin: EdgeInsets.fromLTRB(Get.width * .35, controller.deviceType.value == 'tablet' ? 20 : 10, Get.width * .35, 0),
                       child: Column(
                         children: [
                           TextFormField(
@@ -63,8 +63,8 @@ class LoginPage extends GetView<LoginController> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 20,
+                          SizedBox(
+                            height: controller.deviceType.value == 'tablet' ? 20 : 10,
                           ),
                           Obx(
                             () {
@@ -95,9 +95,6 @@ class LoginPage extends GetView<LoginController> {
                           ),
                         ],
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
                     ),
                     Row(
                       children: [

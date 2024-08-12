@@ -42,7 +42,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       child: DropdownButtonFormField2(
-                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
                         isExpanded: true,
                         decoration: wxInputDecoration(text: 'Line'),
                         value: controller.sLine.value.isNotEmpty ? controller.sLine.value : null,
@@ -74,7 +74,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                     child: Container(
                       padding: const EdgeInsets.all(10),
                       child: DropdownButtonFormField2(
-                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
                         isExpanded: true,
                         decoration: wxInputDecoration(text: 'Style'),
                         value: controller.sStyle.value.isNotEmpty ? controller.sStyle.value : null,
@@ -107,7 +107,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
               ],
             ),
             Container(
-              padding: const EdgeInsets.all(30),
+              padding: controller.deviceType.value == 'tablet' ? const EdgeInsets.all(30) : const EdgeInsets.all(20),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: List.generate(
@@ -123,19 +123,19 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                           children: [
                             Image.asset(
                               controller.images[index],
-                              width: controller.deviceType.value == 'tablet' ? 250 : 100,
-                              height: controller.deviceType.value == 'tablet' ? 250 : 100,
+                              width: controller.deviceType.value == 'tablet' ? 250 : 75,
+                              height: controller.deviceType.value == 'tablet' ? 250 : 75,
                             ),
                             SizedBox(
                               width: controller.deviceType.value == 'tablet' ? 250 : 100,
                               child: Text(
                                 controller.tulisan[index],
-                                style: const TextStyle(fontSize: 30),
+                                style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 30 : 12),
                                 textAlign: TextAlign.center,
                               ),
                             ),
                             Transform.scale(
-                              scale: 2,
+                              scale: controller.deviceType.value == 'tablet' ? 2 : 1,
                               child: Checkbox(
                                 shape: const CircleBorder(),
                                 value: controller.selectedCheckboxIndex.value == index,
@@ -152,7 +152,12 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                 ),
               ),
             ),
-            btn(type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'SUBMIT'),
+            Container(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+              child: btn(
+                  type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'SUBMIT'),
+            ),
           ],
         ),
       ),

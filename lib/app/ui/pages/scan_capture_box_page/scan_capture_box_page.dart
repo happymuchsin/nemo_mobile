@@ -37,9 +37,10 @@ class ScanCaptureBoxPage extends GetView<ScanCaptureBoxController> {
             }
             return Column(
               children: [
-                SizedBox(
-                  height: Get.height * .01,
-                ),
+                if (controller.deviceType.value == 'tablet')
+                  SizedBox(
+                    height: Get.height * .01,
+                  ),
                 SizedBox(
                   height: Get.height * .09,
                   width: Get.width * .75,
@@ -51,46 +52,50 @@ class ScanCaptureBoxPage extends GetView<ScanCaptureBoxController> {
                         children: [
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Username',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
                                 ),
                               ),
                               Text(
                                 ': ${controller.person.values == [] ? '' : controller.person['username']}',
-                                style: const TextStyle(
-                                  fontSize: 20,
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
                                 ),
                               ),
                             ],
                           ),
                           Row(
                             children: [
-                              const Text(
+                              Text(
                                 'Name',
                                 style: TextStyle(
-                                  fontSize: 20,
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
                                 ),
                               ),
                               Text(
                                 ': ${controller.person.values == [] ? '' : controller.person['name']}',
-                                style: const TextStyle(
-                                  fontSize: 20,
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
                                 ),
                               ),
                             ],
                           ),
                         ],
                       ),
-                      btn(
+                      SizedBox(
+                        height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+                        child: btn(
                           type: 'row',
                           onPressed: () => controller.reset(),
                           backgroundColor: Colors.red,
                           isIcon: true,
                           icon: FontAwesomeIcons.rotateLeft,
                           isText: true,
-                          text: 'Reset'),
+                          text: 'Reset',
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -98,7 +103,7 @@ class ScanCaptureBoxPage extends GetView<ScanCaptureBoxController> {
                   height: Get.height * .01,
                 ),
                 SizedBox(
-                  height: Get.height * .7,
+                  height: controller.deviceType.value == 'tablet' ? Get.height * .7 : Get.height * .65,
                   width: Get.width * .75,
                   child: CameraPreview(controller.cameraController),
                 ),
@@ -106,7 +111,7 @@ class ScanCaptureBoxPage extends GetView<ScanCaptureBoxController> {
                   height: Get.height * .01,
                 ),
                 SizedBox(
-                  height: Get.height * .05,
+                  height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
                   child: !controller.captured.value
                       ? Row(
                           mainAxisAlignment: MainAxisAlignment.center,
