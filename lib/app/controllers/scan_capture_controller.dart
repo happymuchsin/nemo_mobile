@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:camera/camera.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -167,7 +168,9 @@ class ScanCaptureController extends GetxController {
     EasyLoading.show();
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
-    // data['rfid'] = '0006593697';
+    if (kDebugMode) {
+      data['rfid'] = '0006593697';
+    }
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/person', data);
     if (r['success'] == 200) {

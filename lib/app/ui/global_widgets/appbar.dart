@@ -119,14 +119,15 @@ class _ViewAppBarState extends State<ViewAppBar> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  area.toString(),
-                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
-                ),
-                Text(
-                  lokasi.toString(),
-                  style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
-                ),
+                Image.asset('assets/img/anggun.png')
+                // Text(
+                //   area.toString(),
+                //   style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                // ),
+                // Text(
+                //   lokasi.toString(),
+                //   style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),
+                // ),
               ],
             ),
           ),

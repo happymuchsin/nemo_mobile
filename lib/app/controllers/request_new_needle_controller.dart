@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -130,7 +131,9 @@ class RequestNewNeedleController extends GetxController {
     EasyLoading.show();
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
-    // data['rfid'] = '0006593697';
+    if (kDebugMode) {
+      data['rfid'] = '0006593697';
+    }
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/person', data);
     if (r['success'] == 200) {
@@ -257,7 +260,9 @@ class RequestNewNeedleController extends GetxController {
     EasyLoading.show();
     Map<String, dynamic> data = {};
     data['rfid'] = sBoxCard.value.toString();
-    // data['rfid'] = '0010754220';
+    if (kDebugMode) {
+      data['rfid'] = '0010754220';
+    }
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/box', data);
     if (r['success'] == 200) {

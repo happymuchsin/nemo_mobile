@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -69,7 +70,9 @@ class ApprovalController extends GetxController {
     EasyLoading.show();
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
-    // data['rfid'] = '0006593697';
+    if (kDebugMode) {
+      data['rfid'] = '0006593697';
+    }
     data['tipe'] = 'approval';
     data['area_id'] = await localShared.bacaInt('area_id');
     data['lokasi_id'] = await localShared.bacaInt('lokasi_id');

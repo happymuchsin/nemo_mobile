@@ -1,4 +1,5 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
@@ -116,7 +117,9 @@ class ReplacementNeedleController extends GetxController {
 
   Future<void> scanBox() async {
     EasyLoading.show();
-    // sBoxCard.value = '0010754220';
+    if (kDebugMode) {
+      sBoxCard.value = '0010754220';
+    }
     if (lemparan[0]['boxCard'] != sBoxCard.value) {
       EasyLoading.dismiss();
       notif('Please scan valid Box');

@@ -72,7 +72,7 @@ class Api extends GetxController {
     try {
       EasyLoading.show(status: 'Checking Update');
       Map<String, dynamic> data = {};
-      data['app'] = 'aerobu_mobile';
+      data['app'] = 'nemo';
       var a = await baseUrl();
       final response = await dio.post(
         "$a/version",
@@ -105,9 +105,9 @@ class Api extends GetxController {
         if (from == 'portal') {
           if (status == true) {
             EasyAppInstaller.instance.downloadAndInstallApk(
-                fileUrl: "$a/update?app=aerobu_mobile&version=${last.toString()}",
+                fileUrl: "$a/update?app=nemo&version=${last.toString()}",
                 fileDirectory: "updateApk",
-                fileName: "aerobu_mobile${last.toString()}.apk",
+                fileName: "nemo${last.toString()}.apk",
                 onDownloadingListener: (progress) {
                   if (progress < 100) {
                     EasyLoading.showProgress(progress / 100, status: "Downloading ...");
@@ -140,9 +140,9 @@ class Api extends GetxController {
                         onPressed: () {
                           xdialog.dismiss();
                           EasyAppInstaller.instance.downloadAndInstallApk(
-                              fileUrl: "$a/update?app=aerobu_mobile&version=${last.toString()}",
+                              fileUrl: "$a/update?app=nemo&version=${last.toString()}",
                               fileDirectory: "updateApk",
-                              fileName: "aerobu_mobile${last.toString()}.apk",
+                              fileName: "nemo${last.toString()}.apk",
                               onDownloadingListener: (progress) {
                                 if (progress < 100) {
                                   EasyLoading.showProgress(progress / 100, status: "Downloading ...");
