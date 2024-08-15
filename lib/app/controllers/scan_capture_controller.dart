@@ -319,34 +319,39 @@ class ScanCaptureController extends GetxController {
   }
 
   Future<void> simpan() async {
-    EasyLoading.show();
-    List<int> imageBytes = File(gambar!.path).readAsBytesSync();
-    Map<String, dynamic> data = {};
-    data['needleStatus'] = lemparan[0]['status'];
-    data['idCard'] = idCard.value;
-    data['approval'] = sApproval.value;
-    data['reff'] = await localShared.baca('reff');
-    data['area_id'] = await localShared.bacaInt('area_id');
-    data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
-    data['username'] = await localShared.baca('username');
-    data['filename'] = gambar!.name.toString();
-    data['ext'] = gambar!.path.split('.').last;
-    data['gambar'] = base64Encode(imageBytes);
-    var a = await apiReq.baseUrl();
-    var r = await apiReq.makeRequest("$a/needle/approval", data, second: 60);
-    if (r['success'] == 200) {
-      EasyLoading.dismiss();
-      xdialog.dismiss();
-      notif(
-        r['message'],
-        tipe: 'success',
-        onDismissCallback: (p0) {
-          Get.back(result: 'refresh');
-        },
-      );
+    if (sApproval.value == '') {
+      notif('Please select Approved By');
     } else {
-      EasyLoading.dismiss();
-      notif(r['message']);
+      EasyLoading.show();
+      List<int> imageBytes = File(gambar!.path).readAsBytesSync();
+      Map<String, dynamic> data = {};
+      data['tipe'] = 'missing-fragment';
+      data['needleStatus'] = lemparan[0]['status'];
+      data['idCard'] = idCard.value;
+      data['approval'] = sApproval.value;
+      data['reff'] = await localShared.baca('reff');
+      data['area_id'] = await localShared.bacaInt('area_id');
+      data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
+      data['username'] = await localShared.baca('username');
+      data['filename'] = gambar!.name.toString();
+      data['ext'] = gambar!.path.split('.').last;
+      data['gambar'] = base64Encode(imageBytes);
+      var a = await apiReq.baseUrl();
+      var r = await apiReq.makeRequest("$a/needle/approval", data, second: 60);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        xdialog.dismiss();
+        notif(
+          r['message'],
+          tipe: 'success',
+          onDismissCallback: (p0) {
+            Get.back(result: 'refresh');
+          },
+        );
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
     }
   }
 

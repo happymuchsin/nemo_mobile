@@ -3,6 +3,7 @@
 import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nemo/app/routes/routes.dart';
@@ -119,7 +120,7 @@ class _ViewAppBarState extends State<ViewAppBar> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Image.asset('assets/img/anggun.png')
+                if (kReleaseMode) Image.asset('assets/img/anggun.png')
                 // Text(
                 //   area.toString(),
                 //   style: TextStyle(fontSize: deviceType == 'tablet' ? 30 : 18),

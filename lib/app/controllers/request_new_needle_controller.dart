@@ -1,10 +1,14 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
+import 'package:nemo/app/ui/global_widgets/decoration.dart';
+import 'package:nemo/app/ui/global_widgets/fixed_form.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/global_widgets/needle.dart';
 import 'package:nemo/app/ui/global_widgets/notif.dart';
@@ -16,8 +20,15 @@ class RequestNewNeedleController extends GetxController {
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
-  var sIdCard = "".obs, sBoxCard = "".obs, deviceType = "".obs, idCard = "".obs, boxCard = "".obs, sLine = "".obs, sStyle = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lLine = [].obs, lStyle = [].obs;
+  var sIdCard = "".obs,
+      sBoxCard = "".obs,
+      deviceType = "".obs,
+      idCard = "".obs,
+      boxCard = "".obs,
+      sLine = "".obs,
+      sStyle = "".obs,
+      sApproval = "".obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lLine = [].obs, lStyle = [].obs, lApproval = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var tIdCard = TextEditingController();
@@ -27,6 +38,7 @@ class RequestNewNeedleController extends GetxController {
   var tBrand = TextEditingController();
   var tTipe = TextEditingController();
   var tSize = TextEditingController();
+  var tRemark = TextEditingController();
 
   var pembantu = TextEditingController();
 
@@ -37,6 +49,7 @@ class RequestNewNeedleController extends GetxController {
     deviceType(getDevice());
     spinner('line', '');
     spinner('style', '');
+    spinner('approval', '');
     scanIdCard();
   }
 
@@ -71,9 +84,22 @@ class RequestNewNeedleController extends GetxController {
         EasyLoading.dismiss();
         notif(r['message']);
       }
+    } else if (tipe == 'approval') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        lApproval(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
     } else {
       lLine();
       lStyle();
+      lApproval();
     }
   }
 
@@ -261,7 +287,7 @@ class RequestNewNeedleController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sBoxCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = '0010754220';
+      data['rfid'] = '00box1';
     }
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/box', data);
@@ -305,6 +331,123 @@ class RequestNewNeedleController extends GetxController {
           tipe: 'success',
           onDismissCallback: (p0) {
             Get.back();
+          },
+        );
+      } else {
+        EasyLoading.dismiss();
+        if (r['data'] == 'approval') {
+          notif(
+            r['message'],
+            onDismissCallback: (p0) {
+              dialogCustomBody(
+                type: DialogType.noHeader,
+                widget: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    children: [
+                      modalTitle(text: 'Approved By', color: Colors.teal),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      Obx(
+                        () => Container(
+                          padding: const EdgeInsets.all(10),
+                          child: DropdownButtonFormField2(
+                            style: TextStyle(fontSize: deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                            isExpanded: true,
+                            decoration: wxInputDecoration(text: 'Approved By'),
+                            value: sApproval.value.isNotEmpty ? sApproval.value : null,
+                            onChanged: (e) {
+                              sApproval(e.toString());
+                            },
+                            items: lApproval
+                                .map(
+                                  (e) => DropdownMenuItem(
+                                    value: e['id'].toString(),
+                                    child: Text(
+                                      e['name'].toString(),
+                                    ),
+                                  ),
+                                )
+                                .toList(),
+                            dropdownSearchData: wxDropdownSearchData(controller: pembantu),
+                            onMenuStateChange: (isOpen) {
+                              if (!isOpen) {
+                                pembantu.clear();
+                              }
+                            },
+                          ),
+                        ),
+                      ),
+                      inputForm(false, 1, tRemark, 'Remark'),
+                      Row(
+                        children: [
+                          exBtn(
+                              type: 'row',
+                              onPressed: () {
+                                xdialog.dismiss();
+                              },
+                              backgroundColor: Colors.red,
+                              isIcon: true,
+                              icon: FontAwesomeIcons.x,
+                              isText: deviceType.value == 'tablet' ? true : false,
+                              text: 'Cancel'),
+                          const SizedBox(
+                            width: 20,
+                          ),
+                          exBtn(
+                              type: 'row',
+                              onPressed: () {
+                                simpan();
+                              },
+                              isIcon: true,
+                              icon: FontAwesomeIcons.floppyDisk,
+                              isText: deviceType.value == 'tablet' ? true : false,
+                              text: 'Save'),
+                        ],
+                      )
+                    ],
+                  ),
+                ),
+              );
+            },
+          );
+        } else {
+          notif(r['message']);
+        }
+      }
+    }
+  }
+
+  Future<void> simpan() async {
+    if (sApproval.value == '') {
+      notif('Please select Approved By');
+    } else if (tRemark.text == '') {
+      notif('Please insert Remark');
+    } else {
+      EasyLoading.show();
+      Map<String, dynamic> data = {};
+      data['tipe'] = 'request-new';
+      data['idCard'] = idCard.value;
+      data['line'] = sLine.value;
+      data['style'] = sStyle.value;
+      data['boxCard'] = boxCard.value;
+      data['approval'] = sApproval.value;
+      data['reff'] = await localShared.baca('reff');
+      data['area_id'] = await localShared.bacaInt('area_id');
+      data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
+      data['username'] = await localShared.baca('username');
+      data['remark'] = tRemark.text;
+      var a = await apiReq.baseUrl();
+      var r = await apiReq.makeRequest("$a/needle/approval", data, second: 60);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        xdialog.dismiss();
+        notif(
+          r['message'],
+          tipe: 'success',
+          onDismissCallback: (p0) {
+            Get.back(result: 'refresh');
           },
         );
       } else {

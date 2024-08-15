@@ -118,7 +118,7 @@ class ReplacementNeedleController extends GetxController {
   Future<void> scanBox() async {
     EasyLoading.show();
     if (kDebugMode) {
-      sBoxCard.value = '0010754220';
+      sBoxCard.value = '00box1';
     }
     if (lemparan[0]['boxCard'] != sBoxCard.value) {
       EasyLoading.dismiss();

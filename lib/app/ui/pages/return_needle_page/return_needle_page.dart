@@ -1,9 +1,11 @@
+import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nemo/app/ui/global_widgets/appbar.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
+import 'package:nemo/app/ui/global_widgets/decoration.dart';
 import 'package:nemo/app/ui/global_widgets/fixed_form.dart';
 import '../../../controllers/return_needle_controller.dart';
 
@@ -27,71 +29,237 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
           title: 'Return Needle',
           halaman: 'return-needle',
         ),
-        body: Container(
-          padding: const EdgeInsets.fromLTRB(30, 10, 30, 30),
-          child: SingleChildScrollView(
-            child: Column(
+        body: Column(
+          children: [
+            const SizedBox(
+              height: 10,
+            ),
+            Row(
               children: [
-                headerFile('User', paddingTop: 0, paddingBottom: 0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: inputForm(true, 1, controller.tIdCard, 'ID Card'),
-                    ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tUsername, 'Username'),
-                    ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tName, 'Name'),
-                    ),
-                  ],
+                Expanded(
+                  child: inputForm(true, 1, controller.username, 'Username'),
                 ),
-                headerFile('Information', paddingTop: 0, paddingBottom: 0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: inputForm(true, 1, controller.tLine, 'Line'),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Line'),
+                        value: controller.sLine.value.isNotEmpty ? controller.sLine.value : null,
+                        onChanged: (e) {
+                          controller.sLine(e.toString());
+                        },
+                        items: controller.lLine
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
                     ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tStyle, 'Style'),
-                    ),
-                  ],
+                  ),
                 ),
-                headerFile('Box', paddingTop: 0, paddingBottom: 0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: inputForm(true, 1, controller.tBoxCard, 'Box Card'),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Style'),
+                        value: controller.sStyle.value.isNotEmpty ? controller.sStyle.value : null,
+                        onChanged: (e) {
+                          controller.sStyle(e.toString());
+                        },
+                        items: controller.lStyle
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
                     ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tBoxName, 'Box'),
-                    ),
-                  ],
+                  ),
                 ),
-                headerFile('Needle', paddingTop: 0, paddingBottom: 0),
-                Row(
-                  children: [
-                    Expanded(
-                      child: inputForm(true, 1, controller.tBrand, 'Brand'),
-                    ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tTipe, 'Type'),
-                    ),
-                    Expanded(
-                      child: inputForm(true, 1, controller.tSize, 'Size'),
-                    ),
-                  ],
-                ),
-                btn(
-                    type: 'row',
-                    onPressed: () => controller.scanBoxCard(),
-                    isIcon: true,
-                    icon: FontAwesomeIcons.floppyDisk,
-                    isText: true,
-                    text: 'Submit'),
               ],
             ),
-          ),
+            Row(
+              children: [
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Brand'),
+                        value: controller.sBrand.value.isNotEmpty ? controller.sBrand.value : null,
+                        onChanged: (e) {
+                          controller.sBrand(e.toString());
+                          controller.spinner('tipe', e.toString());
+                        },
+                        items: controller.lBrand
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Tipe'),
+                        value: controller.sTipe.value.isNotEmpty ? controller.sTipe.value : null,
+                        onChanged: (e) {
+                          controller.sTipe(e.toString());
+                          controller.spinner('size', e.toString());
+                        },
+                        items: controller.lTipe
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Size'),
+                        value: controller.sSize.value.isNotEmpty ? controller.sSize.value : null,
+                        onChanged: (e) {
+                          controller.sSize(e.toString());
+                          controller.spinner('code', e.toString());
+                        },
+                        items: controller.lSize
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Code'),
+                        value: controller.sCode.value.isNotEmpty ? controller.sCode.value : null,
+                        onChanged: (e) {
+                          controller.sCode(e.toString());
+                        },
+                        items: controller.lCode
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+            Row(
+              children: [
+                Expanded(
+                  child: inputForm(true, 1, controller.boxCard, 'Box Card'),
+                ),
+                Expanded(
+                  child: inputForm(true, 1, controller.boxName, 'Box'),
+                ),
+                Expanded(
+                  child: inputForm(true, 1, controller.boxStatus, 'Status'),
+                ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.fromLTRB(30, 0, 30, 0),
+              height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+              child: btn(
+                  type: 'row', onPressed: () => controller.submit(), isIcon: true, icon: FontAwesomeIcons.floppyDisk, isText: true, text: 'SUBMIT'),
+            ),
+          ],
         ),
       ),
     );

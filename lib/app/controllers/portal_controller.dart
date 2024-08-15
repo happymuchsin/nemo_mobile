@@ -70,6 +70,7 @@ class PortalController extends GetxController {
             'dari': 'change-needle',
             'title': "Change Needle\nScan and Camera Capture",
             'halaman': 'scan-camera-capture-box',
+            'tipe': 'change',
           }));
       dataModel.add(PortalModel(
           route: Routes.missingFragment,
@@ -80,7 +81,17 @@ class PortalController extends GetxController {
       dataModel
           .add(PortalModel(route: Routes.approval, name: 'Approval', tipe: 'image', source: 'assets/img/approval.png', visible: bApproval.value));
       dataModel.add(PortalModel(
-          route: Routes.returnNeedle, name: 'Return Needle', tipe: 'image', source: 'assets/img/returnNeedle.png', visible: bReturnNeedle.value));
+          route: Routes.scanCaptureBox,
+          name: 'Return Needle',
+          tipe: 'image',
+          source: 'assets/img/returnNeedle.png',
+          visible: bReturnNeedle.value,
+          args: {
+            'dari': 'return-needle',
+            'title': "Return Needle\nScan and Camera Capture",
+            'halaman': 'scan-camera-capture-box',
+            'tipe': 'return',
+          }));
       dataModel.add(PortalModel(
           route: Routes.requestNewNeedle,
           name: 'Request New Needle',
