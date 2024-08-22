@@ -71,7 +71,7 @@ class ApprovalController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = '0006593697';
+      data['rfid'] = 'ul2c2';
     }
     data['tipe'] = 'approval';
     data['area_id'] = await localShared.bacaInt('area_id');

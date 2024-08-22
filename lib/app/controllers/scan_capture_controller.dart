@@ -169,8 +169,10 @@ class ScanCaptureController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = '0006593697';
+      data['rfid'] = 'ul2c2';
     }
+    data['area_id'] = await localShared.bacaInt('area_id');
+    data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/person', data);
     if (r['success'] == 200) {
@@ -179,7 +181,7 @@ class ScanCaptureController extends GetxController {
       person(r['data']);
       idCard(r['data']['rfid']);
       dialogCustomBody(
-        width: Get.width * .5,
+        width: Get.width * .8,
         type: DialogType.noHeader,
         widget: Container(
           padding: const EdgeInsets.all(8),
@@ -188,39 +190,22 @@ class ScanCaptureController extends GetxController {
               const SizedBox(
                 height: 30,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Username',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
+              Center(
+                child: Text(
+                  'Username : ${person['username']}',
+                  style: const TextStyle(
+                    fontSize: 30,
                   ),
-                  Text(
-                    ' : ${person['username']}',
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                ],
+                ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text(
-                    'Name',
-                    style: TextStyle(
-                      fontSize: 30,
-                    ),
+              Center(
+                child: Text(
+                  'Name : ${person['name']}',
+                  style: const TextStyle(
+                    fontSize: 30,
                   ),
-                  Text(
-                    ' : ${person['name']}',
-                    style: const TextStyle(
-                      fontSize: 30,
-                    ),
-                  ),
-                ],
+                  overflow: TextOverflow.ellipsis,
+                ),
               ),
               const SizedBox(
                 height: 30,
