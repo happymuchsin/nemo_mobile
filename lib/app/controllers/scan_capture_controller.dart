@@ -230,81 +230,85 @@ class ScanCaptureController extends GetxController {
       notif('Please scan ID Card');
     } else {
       cameraController.pausePreview();
-      dialogCustomBody(
-        type: DialogType.noHeader,
-        widget: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              modalTitle(text: 'Approved By', color: Colors.teal),
-              const SizedBox(
-                height: 10,
-              ),
-              Obx(
-                () => Container(
-                  padding: const EdgeInsets.all(10),
-                  child: DropdownButtonFormField2(
-                    style: TextStyle(fontSize: deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
-                    isExpanded: true,
-                    decoration: wxInputDecoration(text: 'Approved By'),
-                    value: sApproval.value.isNotEmpty ? sApproval.value : null,
-                    onChanged: (e) {
-                      sApproval(e.toString());
-                    },
-                    items: lApproval
-                        .map(
-                          (e) => DropdownMenuItem(
-                            value: e['id'].toString(),
-                            child: Text(
-                              e['name'].toString(),
+      if (lemparan[0]['status'] == 'complete') {
+        simpan();
+      } else {
+        dialogCustomBody(
+          type: DialogType.noHeader,
+          widget: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                modalTitle(text: 'Approved By', color: Colors.teal),
+                const SizedBox(
+                  height: 10,
+                ),
+                Obx(
+                  () => Container(
+                    padding: const EdgeInsets.all(10),
+                    child: DropdownButtonFormField2(
+                      style: TextStyle(fontSize: deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
+                      isExpanded: true,
+                      decoration: wxInputDecoration(text: 'Approved By'),
+                      value: sApproval.value.isNotEmpty ? sApproval.value : null,
+                      onChanged: (e) {
+                        sApproval(e.toString());
+                      },
+                      items: lApproval
+                          .map(
+                            (e) => DropdownMenuItem(
+                              value: e['id'].toString(),
+                              child: Text(
+                                e['name'].toString(),
+                              ),
                             ),
-                          ),
-                        )
-                        .toList(),
-                    dropdownSearchData: wxDropdownSearchData(controller: pembantu),
-                    onMenuStateChange: (isOpen) {
-                      if (!isOpen) {
-                        pembantu.clear();
-                      }
-                    },
+                          )
+                          .toList(),
+                      dropdownSearchData: wxDropdownSearchData(controller: pembantu),
+                      onMenuStateChange: (isOpen) {
+                        if (!isOpen) {
+                          pembantu.clear();
+                        }
+                      },
+                    ),
                   ),
                 ),
-              ),
-              Row(
-                children: [
-                  exBtn(
-                      type: 'row',
-                      onPressed: () {
-                        xdialog.dismiss();
-                      },
-                      backgroundColor: Colors.red,
-                      isIcon: true,
-                      icon: FontAwesomeIcons.x,
-                      isText: deviceType.value == 'tablet' ? true : false,
-                      text: 'Cancel'),
-                  const SizedBox(
-                    width: 20,
-                  ),
-                  exBtn(
-                      type: 'row',
-                      onPressed: () {
-                        simpan();
-                      },
-                      isIcon: true,
-                      icon: FontAwesomeIcons.floppyDisk,
-                      isText: deviceType.value == 'tablet' ? true : false,
-                      text: 'Save'),
-                ],
-              )
-            ],
+                Row(
+                  children: [
+                    exBtn(
+                        type: 'row',
+                        onPressed: () {
+                          xdialog.dismiss();
+                        },
+                        backgroundColor: Colors.red,
+                        isIcon: true,
+                        icon: FontAwesomeIcons.x,
+                        isText: deviceType.value == 'tablet' ? true : false,
+                        text: 'Cancel'),
+                    const SizedBox(
+                      width: 20,
+                    ),
+                    exBtn(
+                        type: 'row',
+                        onPressed: () {
+                          simpan();
+                        },
+                        isIcon: true,
+                        icon: FontAwesomeIcons.floppyDisk,
+                        isText: deviceType.value == 'tablet' ? true : false,
+                        text: 'Save'),
+                  ],
+                )
+              ],
+            ),
           ),
-        ),
-      );
+        );
+      }
     }
   }
 
   Future<void> simpan() async {
-    if (sApproval.value == '') {
+    if (sApproval.value == '' && lemparan[0]['status'] == 'incomplete') {
       notif('Please select Approved By');
     } else {
       EasyLoading.show();

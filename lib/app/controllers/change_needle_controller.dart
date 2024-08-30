@@ -14,13 +14,14 @@ class ChangeNeedleController extends GetxController {
   var lemparan = Get.arguments;
   final apiReq = Api();
   final localShared = LocalShared();
-  var lLine = [].obs, lStyle = [].obs;
-  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sLine = "".obs, sStyle = "".obs;
+  var lStyle = [].obs;
+  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sStyle = "".obs;
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
 
   var pembantu = TextEditingController();
   var username = TextEditingController();
+  var line = TextEditingController();
   var brand = TextEditingController();
   var tipe = TextEditingController();
   var size = TextEditingController();
@@ -55,11 +56,11 @@ class ChangeNeedleController extends GetxController {
     gambar = lemparan['gambar'];
 
     username.text = person['username'];
+    line.text = person['line'];
     brand.text = stock['needle']['brand'];
     tipe.text = stock['needle']['tipe'];
     size.text = stock['needle']['size'];
 
-    spinner('line', '');
     spinner('style', '');
   }
 
@@ -78,19 +79,7 @@ class ChangeNeedleController extends GetxController {
     data['x'] = x;
     data['area_id'] = await localShared.bacaInt('area_id');
     data['username'] = await localShared.baca('username');
-    if (tipe == 'line') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        lLine(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'style') {
+    if (tipe == 'style') {
       data['tipe'] = tipe;
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
@@ -103,15 +92,12 @@ class ChangeNeedleController extends GetxController {
         notif(r['message']);
       }
     } else {
-      lLine();
       lStyle();
     }
   }
 
   Future<void> submit() async {
-    if (sLine.value == '') {
-      notif('Please select Line');
-    } else if (sStyle.value == '') {
+    if (sStyle.value == '') {
       notif('Please select Style');
     } else if (selectedCheckboxIndex.value == -1) {
       notif('Please select Status');
@@ -120,7 +106,6 @@ class ChangeNeedleController extends GetxController {
       List<int> imageBytes = File(gambar!.path).readAsBytesSync();
       Map<String, dynamic> data = {};
       data['idCard'] = sIdCard.value;
-      data['line'] = sLine.value;
       data['style'] = sStyle.value;
       data['boxCard'] = sBoxCard.value;
       data['needle'] = stock['needle']['id'];

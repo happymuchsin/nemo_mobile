@@ -39,38 +39,41 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                 Expanded(
                   child: inputForm(true, 1, controller.username, 'Username'),
                 ),
-                Obx(
-                  () => Expanded(
-                    child: Container(
-                      padding: const EdgeInsets.all(10),
-                      child: DropdownButtonFormField2(
-                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
-                        isExpanded: true,
-                        decoration: wxInputDecoration(text: 'Line'),
-                        value: controller.sLine.value.isNotEmpty ? controller.sLine.value : null,
-                        onChanged: (e) {
-                          controller.sLine(e.toString());
-                        },
-                        items: controller.lLine
-                            .map(
-                              (e) => DropdownMenuItem(
-                                value: e['id'].toString(),
-                                child: Text(
-                                  e['name'].toString(),
-                                ),
-                              ),
-                            )
-                            .toList(),
-                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
-                        onMenuStateChange: (isOpen) {
-                          if (!isOpen) {
-                            controller.pembantu.clear();
-                          }
-                        },
-                      ),
-                    ),
-                  ),
+                Expanded(
+                  child: inputForm(true, 1, controller.line, 'Line'),
                 ),
+                // Obx(
+                //   () => Expanded(
+                //     child: Container(
+                //       padding: const EdgeInsets.all(10),
+                //       child: DropdownButtonFormField2(
+                //         style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                //         isExpanded: true,
+                //         decoration: wxInputDecoration(text: 'Line'),
+                //         value: controller.sLine.value.isNotEmpty ? controller.sLine.value : null,
+                //         onChanged: (e) {
+                //           controller.sLine(e.toString());
+                //         },
+                //         items: controller.lLine
+                //             .map(
+                //               (e) => DropdownMenuItem(
+                //                 value: e['id'].toString(),
+                //                 child: Text(
+                //                   e['name'].toString(),
+                //                 ),
+                //               ),
+                //             )
+                //             .toList(),
+                //         dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                //         onMenuStateChange: (isOpen) {
+                //           if (!isOpen) {
+                //             controller.pembantu.clear();
+                //           }
+                //         },
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 Obx(
                   () => Expanded(
                     child: Container(

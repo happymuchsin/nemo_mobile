@@ -16,18 +16,11 @@ class ReturnNeedleController extends GetxController {
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs;
-  var deviceType = "".obs,
-      sIdCard = "".obs,
-      sBoxCard = "".obs,
-      sLine = "".obs,
-      sStyle = "".obs,
-      sBrand = "".obs,
-      sTipe = "".obs,
-      sSize = "".obs,
-      sCode = "".obs;
-  var lLine = [].obs, lStyle = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
+  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sStyle = "".obs, sBrand = "".obs, sTipe = "".obs, sSize = "".obs, sCode = "".obs;
+  var lStyle = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
 
   var username = TextEditingController();
+  var line = TextEditingController();
   var boxCard = TextEditingController();
   var boxName = TextEditingController();
   var boxStatus = TextEditingController();
@@ -48,11 +41,11 @@ class ReturnNeedleController extends GetxController {
     sBoxCard(lemparan['boxCard']);
     gambar = lemparan['gambar'];
     username.text = person['username'];
+    line.text = person['line'];
     boxCard.text = box['rfid'];
     boxName.text = box['name'];
     boxStatus.text = box['status'];
 
-    spinner('line', '');
     spinner('style', '');
     spinner('brand', '');
   }
@@ -64,19 +57,7 @@ class ReturnNeedleController extends GetxController {
     data['x'] = x;
     data['area_id'] = await localShared.bacaInt('area_id');
     data['username'] = await localShared.baca('username');
-    if (tipe == 'line') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        lLine(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'style') {
+    if (tipe == 'style') {
       data['tipe'] = tipe;
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
@@ -140,7 +121,6 @@ class ReturnNeedleController extends GetxController {
         notif(r['message']);
       }
     } else {
-      lLine();
       lStyle();
       lBrand();
       lTipe();
@@ -150,9 +130,7 @@ class ReturnNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sLine.value == '') {
-      notif('Please select Line');
-    } else if (sStyle.value == '') {
+    if (sStyle.value == '') {
       notif('Please select Style');
     } else if (sBrand.value == '') {
       notif('Please select Brand');
@@ -168,7 +146,6 @@ class ReturnNeedleController extends GetxController {
       Map<String, dynamic> data = {};
       data['status'] = 'RETURN';
       data['idCard'] = sIdCard.value;
-      data['line'] = sLine.value;
       data['style'] = sStyle.value;
       // data['brand'] = sBrand.value;
       // data['tipe'] = sTipe.value;

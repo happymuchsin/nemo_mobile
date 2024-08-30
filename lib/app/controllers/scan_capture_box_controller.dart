@@ -251,7 +251,7 @@ class ScanCaptureBoxController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sBoxCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = '00box1';
+      data['rfid'] = '00box2';
     }
     data['tipe'] = lemparan[0]['tipe'].toString();
     var a = await apiReq.baseUrl();

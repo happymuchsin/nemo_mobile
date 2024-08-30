@@ -20,15 +20,8 @@ class RequestNewNeedleController extends GetxController {
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
-  var sIdCard = "".obs,
-      sBoxCard = "".obs,
-      deviceType = "".obs,
-      idCard = "".obs,
-      boxCard = "".obs,
-      sLine = "".obs,
-      sStyle = "".obs,
-      sApproval = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lLine = [].obs, lStyle = [].obs, lApproval = [].obs;
+  var sIdCard = "".obs, sBoxCard = "".obs, deviceType = "".obs, idCard = "".obs, boxCard = "".obs, sStyle = "".obs, sApproval = "".obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lStyle = [].obs, lApproval = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var tIdCard = TextEditingController();
@@ -39,6 +32,7 @@ class RequestNewNeedleController extends GetxController {
   var tTipe = TextEditingController();
   var tSize = TextEditingController();
   var tRemark = TextEditingController();
+  var tLine = TextEditingController();
 
   var pembantu = TextEditingController();
 
@@ -47,7 +41,6 @@ class RequestNewNeedleController extends GetxController {
     super.onReady();
 
     deviceType(getDevice());
-    spinner('line', '');
     spinner('style', '');
     spinner('approval', '');
     scanIdCard();
@@ -60,19 +53,7 @@ class RequestNewNeedleController extends GetxController {
     data['x'] = x;
     data['area_id'] = await localShared.bacaInt('area_id');
     data['username'] = await localShared.baca('username');
-    if (tipe == 'line') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        lLine(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'style') {
+    if (tipe == 'style') {
       data['tipe'] = tipe;
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
@@ -97,7 +78,6 @@ class RequestNewNeedleController extends GetxController {
         notif(r['message']);
       }
     } else {
-      lLine();
       lStyle();
       lApproval();
     }
@@ -167,6 +147,7 @@ class RequestNewNeedleController extends GetxController {
     if (r['success'] == 200) {
       EasyLoading.dismiss();
       xdialog.dismiss();
+      tLine.text = r['data']['line'];
       tIdCard.text = r['data']['rfid'];
       tUsername.text = r['data']['username'];
       tName.text = r['data']['name'];
@@ -293,15 +274,12 @@ class RequestNewNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sLine.value == '') {
-      notif('Please select Line');
-    } else if (sStyle.value == '') {
+    if (sStyle.value == '') {
       notif('Please select Style');
     } else {
       EasyLoading.show();
       Map<String, dynamic> data = {};
       data['idCard'] = idCard.value;
-      data['line'] = sLine.value;
       data['style'] = sStyle.value;
       data['boxCard'] = boxCard.value;
       data['needle'] = stock['needle']['id'];
@@ -414,7 +392,6 @@ class RequestNewNeedleController extends GetxController {
       Map<String, dynamic> data = {};
       data['tipe'] = 'request-new';
       data['idCard'] = idCard.value;
-      data['line'] = sLine.value;
       data['style'] = sStyle.value;
       data['boxCard'] = boxCard.value;
       data['approval'] = sApproval.value;
