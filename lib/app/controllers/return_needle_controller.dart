@@ -16,8 +16,16 @@ class ReturnNeedleController extends GetxController {
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs;
-  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sStyle = "".obs, sBrand = "".obs, sTipe = "".obs, sSize = "".obs, sCode = "".obs;
-  var lStyle = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
+  var deviceType = "".obs,
+      sIdCard = "".obs,
+      sBoxCard = "".obs,
+      sBuyer = "".obs,
+      sStyle = "".obs,
+      sBrand = "".obs,
+      sTipe = "".obs,
+      sSize = "".obs,
+      sCode = "".obs;
+  var lBuyer = [].obs, lStyle = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
 
   var username = TextEditingController();
   var line = TextEditingController();
@@ -46,7 +54,7 @@ class ReturnNeedleController extends GetxController {
     boxName.text = box['name'];
     boxStatus.text = box['status'];
 
-    spinner('style', '');
+    spinner('buyer', '');
     spinner('brand', '');
   }
 
@@ -57,7 +65,19 @@ class ReturnNeedleController extends GetxController {
     data['x'] = x;
     data['area_id'] = await localShared.bacaInt('area_id');
     data['username'] = await localShared.baca('username');
-    if (tipe == 'style') {
+    if (tipe == 'buyer') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        lBuyer(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'style') {
       data['tipe'] = tipe;
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
@@ -121,6 +141,7 @@ class ReturnNeedleController extends GetxController {
         notif(r['message']);
       }
     } else {
+      lBuyer();
       lStyle();
       lBrand();
       lTipe();
@@ -130,7 +151,9 @@ class ReturnNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sStyle.value == '') {
+    if (sBuyer.value == '') {
+      notif('Please select Buyer');
+    } else if (sStyle.value == '') {
       notif('Please select Style');
     } else if (sBrand.value == '') {
       notif('Please select Brand');

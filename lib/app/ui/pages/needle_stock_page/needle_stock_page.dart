@@ -22,7 +22,7 @@ class NeedleStockPage extends GetView<NeedleStockController> {
         Get.back();
       },
       child: Scaffold(
-        appBar: const ViewAppBar(
+        appBar: ViewAppBar(
           title: "Needle Stock",
           halaman: 'needle-stock',
         ),

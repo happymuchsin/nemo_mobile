@@ -25,7 +25,7 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
         Get.back();
       },
       child: Scaffold(
-        appBar: const ViewAppBar(
+        appBar: ViewAppBar(
           title: 'Return Needle',
           halaman: 'return-needle',
         ),
@@ -74,6 +74,39 @@ class ReturnNeedlePage extends GetView<ReturnNeedleController> {
                 //     ),
                 //   ),
                 // ),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'Buyer'),
+                        value: controller.sBuyer.value.isNotEmpty ? controller.sBuyer.value : null,
+                        onChanged: (e) {
+                          controller.sBuyer(e.toString());
+                          controller.spinner('style', e.toString());
+                        },
+                        items: controller.lBuyer
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
                 Obx(
                   () => Expanded(
                     child: Container(

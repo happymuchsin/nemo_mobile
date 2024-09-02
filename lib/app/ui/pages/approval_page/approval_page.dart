@@ -24,7 +24,7 @@ class ApprovalPage extends GetView<ApprovalController> {
         Get.back();
       },
       child: Scaffold(
-        appBar: const ViewAppBar(
+        appBar: ViewAppBar(
           title: 'Approval',
           halaman: 'approval',
         ),
@@ -126,6 +126,7 @@ class ApprovalPage extends GetView<ApprovalController> {
                                           data.username,
                                           data.line,
                                           data.lineId,
+                                          data.buyer,
                                           data.style,
                                           data.styleId,
                                           data.brand,

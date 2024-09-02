@@ -20,8 +20,15 @@ class RequestNewNeedleController extends GetxController {
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
-  var sIdCard = "".obs, sBoxCard = "".obs, deviceType = "".obs, idCard = "".obs, boxCard = "".obs, sStyle = "".obs, sApproval = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lStyle = [].obs, lApproval = [].obs;
+  var sIdCard = "".obs,
+      sBoxCard = "".obs,
+      deviceType = "".obs,
+      idCard = "".obs,
+      boxCard = "".obs,
+      sBuyer = "".obs,
+      sStyle = "".obs,
+      sApproval = "".obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lStyle = [].obs, lApproval = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var tIdCard = TextEditingController();
@@ -41,7 +48,7 @@ class RequestNewNeedleController extends GetxController {
     super.onReady();
 
     deviceType(getDevice());
-    spinner('style', '');
+    spinner('buyer', '');
     spinner('approval', '');
     scanIdCard();
   }
@@ -53,7 +60,19 @@ class RequestNewNeedleController extends GetxController {
     data['x'] = x;
     data['area_id'] = await localShared.bacaInt('area_id');
     data['username'] = await localShared.baca('username');
-    if (tipe == 'style') {
+    if (tipe == 'buyer') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        lBuyer(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'style') {
       data['tipe'] = tipe;
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
@@ -78,6 +97,7 @@ class RequestNewNeedleController extends GetxController {
         notif(r['message']);
       }
     } else {
+      lBuyer();
       lStyle();
       lApproval();
     }
@@ -274,7 +294,9 @@ class RequestNewNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sStyle.value == '') {
+    if (sBuyer.value == '') {
+      notif('Please select Buyer');
+    } else if (sStyle.value == '') {
       notif('Please select Style');
     } else {
       EasyLoading.show();

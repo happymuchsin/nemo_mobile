@@ -27,6 +27,7 @@ mixin _$ApprovalModel {
   String? get idCard => throw _privateConstructorUsedError;
   String? get line => throw _privateConstructorUsedError;
   int? get lineId => throw _privateConstructorUsedError;
+  String? get buyer => throw _privateConstructorUsedError;
   String? get style => throw _privateConstructorUsedError;
   int? get styleId => throw _privateConstructorUsedError;
   String? get brand => throw _privateConstructorUsedError;
@@ -56,6 +57,7 @@ abstract class $ApprovalModelCopyWith<$Res> {
       String? idCard,
       String? line,
       int? lineId,
+      String? buyer,
       String? style,
       int? styleId,
       String? brand,
@@ -86,6 +88,7 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
     Object? idCard = freezed,
     Object? line = freezed,
     Object? lineId = freezed,
+    Object? buyer = freezed,
     Object? style = freezed,
     Object? styleId = freezed,
     Object? brand = freezed,
@@ -124,6 +127,10 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
           ? _value.lineId
           : lineId // ignore: cast_nullable_to_non_nullable
               as int?,
+      buyer: freezed == buyer
+          ? _value.buyer
+          : buyer // ignore: cast_nullable_to_non_nullable
+              as String?,
       style: freezed == style
           ? _value.style
           : style // ignore: cast_nullable_to_non_nullable
@@ -176,6 +183,7 @@ abstract class _$$ApprovalModelImplCopyWith<$Res>
       String? idCard,
       String? line,
       int? lineId,
+      String? buyer,
       String? style,
       int? styleId,
       String? brand,
@@ -204,6 +212,7 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
     Object? idCard = freezed,
     Object? line = freezed,
     Object? lineId = freezed,
+    Object? buyer = freezed,
     Object? style = freezed,
     Object? styleId = freezed,
     Object? brand = freezed,
@@ -242,6 +251,10 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
           ? _value.lineId
           : lineId // ignore: cast_nullable_to_non_nullable
               as int?,
+      buyer: freezed == buyer
+          ? _value.buyer
+          : buyer // ignore: cast_nullable_to_non_nullable
+              as String?,
       style: freezed == style
           ? _value.style
           : style // ignore: cast_nullable_to_non_nullable
@@ -289,6 +302,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
       this.idCard,
       this.line,
       this.lineId,
+      this.buyer,
       this.style,
       this.styleId,
       this.brand,
@@ -316,6 +330,8 @@ class _$ApprovalModelImpl implements _ApprovalModel {
   @override
   final int? lineId;
   @override
+  final String? buyer;
+  @override
   final String? style;
   @override
   final int? styleId;
@@ -334,7 +350,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
 
   @override
   String toString() {
-    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, idCard: $idCard, line: $line, lineId: $lineId, style: $style, styleId: $styleId, brand: $brand, tipe: $tipe, size: $size, boxCard: $boxCard, needleId: $needleId, gambar: $gambar)';
+    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, idCard: $idCard, line: $line, lineId: $lineId, buyer: $buyer, style: $style, styleId: $styleId, brand: $brand, tipe: $tipe, size: $size, boxCard: $boxCard, needleId: $needleId, gambar: $gambar)';
   }
 
   @override
@@ -350,6 +366,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
             (identical(other.idCard, idCard) || other.idCard == idCard) &&
             (identical(other.line, line) || other.line == line) &&
             (identical(other.lineId, lineId) || other.lineId == lineId) &&
+            (identical(other.buyer, buyer) || other.buyer == buyer) &&
             (identical(other.style, style) || other.style == style) &&
             (identical(other.styleId, styleId) || other.styleId == styleId) &&
             (identical(other.brand, brand) || other.brand == brand) &&
@@ -372,6 +389,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
       idCard,
       line,
       lineId,
+      buyer,
       style,
       styleId,
       brand,
@@ -404,6 +422,7 @@ abstract class _ApprovalModel implements ApprovalModel {
       final String? idCard,
       final String? line,
       final int? lineId,
+      final String? buyer,
       final String? style,
       final int? styleId,
       final String? brand,
@@ -430,6 +449,8 @@ abstract class _ApprovalModel implements ApprovalModel {
   String? get line;
   @override
   int? get lineId;
+  @override
+  String? get buyer;
   @override
   String? get style;
   @override

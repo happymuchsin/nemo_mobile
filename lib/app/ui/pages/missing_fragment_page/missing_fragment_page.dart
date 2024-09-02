@@ -22,7 +22,7 @@ class MissingFragmentPage extends GetView<MissingFragmentController> {
         Get.back();
       },
       child: Scaffold(
-        appBar: const ViewAppBar(
+        appBar: ViewAppBar(
           title: 'Missing Fragment',
           halaman: 'missing-fragment',
         ),

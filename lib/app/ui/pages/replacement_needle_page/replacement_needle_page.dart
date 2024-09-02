@@ -38,6 +38,7 @@ class ReplacementNeedlePage extends GetView<ReplacementNeedleController> {
               children: [
                 Expanded(child: inputForm(true, 1, controller.username, 'Username')),
                 Expanded(child: inputForm(true, 1, controller.line, 'Line')),
+                Expanded(child: inputForm(true, 1, controller.buyer, 'Buyer')),
                 Expanded(child: inputForm(true, 1, controller.style, 'Style')),
                 Expanded(child: inputForm(true, 1, controller.brand, 'Brand')),
                 Expanded(child: inputForm(true, 1, controller.tipe, 'Type')),

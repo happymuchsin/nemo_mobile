@@ -12,8 +12,8 @@ import 'package:nemo/app/ui/utils/api.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
 
 class ViewAppBar extends StatefulWidget implements PreferredSizeWidget {
-  const ViewAppBar({super.key, title, halaman})
-      : preferredSize = const Size.fromHeight(kToolbarHeight),
+  ViewAppBar({super.key, title, halaman})
+      : preferredSize = Size.fromHeight(getDevice() == 'hp' ? kToolbarHeight : kToolbarHeight + 30),
         judul = title,
         page = halaman;
 

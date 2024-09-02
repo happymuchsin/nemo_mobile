@@ -11,7 +11,7 @@ class PortalPage extends GetView<PortalController> {
   Widget build(BuildContext context) {
     return Scaffold(
       resizeToAvoidBottomInset: false,
-      appBar: const ViewAppBar(
+      appBar: ViewAppBar(
         title: 'Dashboard',
         halaman: 'dashboard',
       ),
