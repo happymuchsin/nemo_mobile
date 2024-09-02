@@ -114,8 +114,41 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                         value: controller.sStyle.value.isNotEmpty ? controller.sStyle.value : null,
                         onChanged: (e) {
                           controller.sStyle(e.toString());
+                          controller.spinner('srf', e.toString());
                         },
                         items: controller.lStyle
+                            .map(
+                              (e) => DropdownMenuItem(
+                                value: e['id'].toString(),
+                                child: Text(
+                                  e['name'].toString(),
+                                ),
+                              ),
+                            )
+                            .toList(),
+                        dropdownSearchData: wxDropdownSearchData(controller: controller.pembantu),
+                        onMenuStateChange: (isOpen) {
+                          if (!isOpen) {
+                            controller.pembantu.clear();
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                ),
+                Obx(
+                  () => Expanded(
+                    child: Container(
+                      padding: const EdgeInsets.all(10),
+                      child: DropdownButtonFormField2(
+                        style: TextStyle(fontSize: controller.deviceType.value == 'tablet' ? 20 : 12, color: Colors.black),
+                        isExpanded: true,
+                        decoration: wxInputDecoration(text: 'SRF'),
+                        value: controller.sSrf.value.isNotEmpty ? controller.sSrf.value : null,
+                        onChanged: (e) {
+                          controller.sSrf(e.toString());
+                        },
+                        items: controller.lSrf
                             .map(
                               (e) => DropdownMenuItem(
                                 value: e['id'].toString(),

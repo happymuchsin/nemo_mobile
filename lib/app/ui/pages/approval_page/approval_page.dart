@@ -128,6 +128,7 @@ class ApprovalPage extends GetView<ApprovalController> {
                                           data.lineId,
                                           data.buyer,
                                           data.style,
+                                          data.srf,
                                           data.styleId,
                                           data.brand,
                                           data.tipe,

@@ -15,6 +15,7 @@ class ApprovalModel with _$ApprovalModel {
     int? lineId,
     String? buyer,
     String? style,
+    String? srf,
     int? styleId,
     String? brand,
     String? tipe,

@@ -14,8 +14,8 @@ class ChangeNeedleController extends GetxController {
   var lemparan = Get.arguments;
   final apiReq = Api();
   final localShared = LocalShared();
-  var lBuyer = [].obs, lStyle = [].obs;
-  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sBuyer = "".obs, sStyle = "".obs;
+  var lBuyer = [].obs, lStyle = [].obs, lSrf = [].obs;
+  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, sBuyer = "".obs, sStyle = "".obs, sSrf = "".obs;
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
 
@@ -96,7 +96,23 @@ class ChangeNeedleController extends GetxController {
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
         EasyLoading.dismiss();
+        sStyle('');
+        sSrf('');
         lStyle(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'srf') {
+      data['tipe'] = tipe;
+      data['buyer'] = sBuyer.value;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sSrf('');
+        lSrf(r['data']);
       } else if (r['success'] == 423) {
         EasyLoading.dismiss();
       } else {
@@ -106,6 +122,7 @@ class ChangeNeedleController extends GetxController {
     } else {
       lBuyer();
       lStyle();
+      lSrf();
     }
   }
 
@@ -114,6 +131,8 @@ class ChangeNeedleController extends GetxController {
       notif('Please select Buyer');
     } else if (sStyle.value == '') {
       notif('Please select Style');
+    } else if (sSrf.value == '') {
+      notif('Please select SRF');
     } else if (selectedCheckboxIndex.value == -1) {
       notif('Please select Status');
     } else {
@@ -121,7 +140,7 @@ class ChangeNeedleController extends GetxController {
       List<int> imageBytes = File(gambar!.path).readAsBytesSync();
       Map<String, dynamic> data = {};
       data['idCard'] = sIdCard.value;
-      data['style'] = sStyle.value;
+      data['style'] = sSrf.value;
       data['boxCard'] = sBoxCard.value;
       data['needle'] = stock['needle']['id'];
       data['username'] = await localShared.baca('username');

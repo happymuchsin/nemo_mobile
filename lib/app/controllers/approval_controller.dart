@@ -89,6 +89,7 @@ class ApprovalController extends GetxController {
         r['data']['lineId'],
         r['data']['buyer'],
         r['data']['style'],
+        r['data']['srf'],
         r['data']['styleId'],
         r['data']['brand'],
         r['data']['tipe'],
@@ -106,7 +107,7 @@ class ApprovalController extends GetxController {
     });
   }
 
-  Future<void> btnStatus(id, x, idCard, username, line, lineId, buyer, style, styleId, brand, tipe, size, boxCard, needleId, gambar) async {
+  Future<void> btnStatus(id, x, idCard, username, line, lineId, buyer, style, srf, styleId, brand, tipe, size, boxCard, needleId, gambar) async {
     if (x == 'WAITING') {
       notif('NEED APPROVAL');
     } else if (x == 'REJECT') {
@@ -122,6 +123,7 @@ class ApprovalController extends GetxController {
       args['lineId'] = lineId;
       args['buyer'] = buyer;
       args['style'] = style;
+      args['srf'] = srf;
       args['styleId'] = styleId;
       args['brand'] = brand;
       args['tipe'] = tipe;

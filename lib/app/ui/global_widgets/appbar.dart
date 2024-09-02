@@ -99,7 +99,7 @@ class _ViewAppBarState extends State<ViewAppBar> {
     return AppBar(
       backgroundColor: const Color(0xFF2A6689),
       foregroundColor: Colors.white,
-      toolbarHeight: kToolbarHeight,
+      toolbarHeight: getDevice() == 'hp' ? kToolbarHeight : kToolbarHeight + 30,
       title: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

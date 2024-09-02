@@ -24,6 +24,7 @@ class ReplacementNeedleController extends GetxController {
   var line = TextEditingController();
   var buyer = TextEditingController();
   var style = TextEditingController();
+  var srf = TextEditingController();
   var brand = TextEditingController();
   var tipe = TextEditingController();
   var size = TextEditingController();
@@ -46,6 +47,7 @@ class ReplacementNeedleController extends GetxController {
     line.text = lemparan[0]['line'];
     buyer.text = lemparan[0]['buyer'];
     style.text = lemparan[0]['style'];
+    srf.text = lemparan[0]['srf'];
     brand.text = lemparan[0]['brand'];
     tipe.text = lemparan[0]['tipe'];
     size.text = lemparan[0]['size'];

@@ -21,11 +21,12 @@ class ReturnNeedleController extends GetxController {
       sBoxCard = "".obs,
       sBuyer = "".obs,
       sStyle = "".obs,
+      sSrf = "".obs,
       sBrand = "".obs,
       sTipe = "".obs,
       sSize = "".obs,
       sCode = "".obs;
-  var lBuyer = [].obs, lStyle = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
+  var lBuyer = [].obs, lStyle = [].obs, lSrf = [].obs, lBrand = [].obs, lTipe = [].obs, lSize = [].obs, lCode = [].obs;
 
   var username = TextEditingController();
   var line = TextEditingController();
@@ -82,7 +83,23 @@ class ReturnNeedleController extends GetxController {
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
         EasyLoading.dismiss();
+        sStyle('');
+        sSrf('');
         lStyle(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'srf') {
+      data['tipe'] = tipe;
+      data['buyer'] = sBuyer.value;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sSrf('');
+        lSrf(r['data']);
       } else if (r['success'] == 423) {
         EasyLoading.dismiss();
       } else {
@@ -143,6 +160,7 @@ class ReturnNeedleController extends GetxController {
     } else {
       lBuyer();
       lStyle();
+      lSrf();
       lBrand();
       lTipe();
       lSize();
@@ -155,6 +173,8 @@ class ReturnNeedleController extends GetxController {
       notif('Please select Buyer');
     } else if (sStyle.value == '') {
       notif('Please select Style');
+    } else if (sSrf.value == '') {
+      notif('Please select SRF');
     } else if (sBrand.value == '') {
       notif('Please select Brand');
     } else if (sTipe.value == '') {
@@ -169,7 +189,7 @@ class ReturnNeedleController extends GetxController {
       Map<String, dynamic> data = {};
       data['status'] = 'RETURN';
       data['idCard'] = sIdCard.value;
-      data['style'] = sStyle.value;
+      data['style'] = sSrf.value;
       // data['brand'] = sBrand.value;
       // data['tipe'] = sTipe.value;
       // data['size'] = sSize.value;

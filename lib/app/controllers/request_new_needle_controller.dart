@@ -27,8 +27,9 @@ class RequestNewNeedleController extends GetxController {
       boxCard = "".obs,
       sBuyer = "".obs,
       sStyle = "".obs,
+      sSrf = "".obs,
       sApproval = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lStyle = [].obs, lApproval = [].obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lStyle = [].obs, lSrf = [].obs, lApproval = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var tIdCard = TextEditingController();
@@ -77,7 +78,23 @@ class RequestNewNeedleController extends GetxController {
       var r = await apiReq.makeRequest("$a/spinner", data);
       if (r['success'] == 200) {
         EasyLoading.dismiss();
+        sStyle('');
+        sSrf('');
         lStyle(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'srf') {
+      data['tipe'] = tipe;
+      data['buyer'] = sBuyer.value;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sSrf('');
+        lSrf(r['data']);
       } else if (r['success'] == 423) {
         EasyLoading.dismiss();
       } else {
@@ -99,6 +116,7 @@ class RequestNewNeedleController extends GetxController {
     } else {
       lBuyer();
       lStyle();
+      lSrf();
       lApproval();
     }
   }
@@ -298,11 +316,13 @@ class RequestNewNeedleController extends GetxController {
       notif('Please select Buyer');
     } else if (sStyle.value == '') {
       notif('Please select Style');
+    } else if (sSrf.value == '') {
+      notif('Please select SRF');
     } else {
       EasyLoading.show();
       Map<String, dynamic> data = {};
       data['idCard'] = idCard.value;
-      data['style'] = sStyle.value;
+      data['style'] = sSrf.value;
       data['boxCard'] = boxCard.value;
       data['needle'] = stock['needle']['id'];
       data['username'] = await localShared.baca('username');
@@ -414,7 +434,7 @@ class RequestNewNeedleController extends GetxController {
       Map<String, dynamic> data = {};
       data['tipe'] = 'request-new';
       data['idCard'] = idCard.value;
-      data['style'] = sStyle.value;
+      data['style'] = sSrf.value;
       data['boxCard'] = boxCard.value;
       data['approval'] = sApproval.value;
       data['reff'] = await localShared.baca('reff');
