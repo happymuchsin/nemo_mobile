@@ -12,12 +12,7 @@ class PortalController extends GetxController {
   final apiReq = Api();
   final localShared = LocalShared();
   var mode = "".obs, username = "".obs, deviceType = "".obs;
-  var bChangeNeedle = false.obs,
-      bMissingFragment = false.obs,
-      bApproval = false.obs,
-      bReturnNeedle = false.obs,
-      bRequestNewNeedle = false.obs,
-      bNeedleStock = false.obs;
+  var bChangeNeedle = false.obs, bApproval = false.obs, bRequestNewNeedle = false.obs, bNeedleStock = false.obs;
 
   var dataModel = <PortalModel>[].obs;
 
@@ -53,51 +48,43 @@ class PortalController extends GetxController {
     if (a == 'yes') {
       await checkPermission();
 
-      bChangeNeedle(true);
-      bMissingFragment(true);
-      bApproval(true);
-      bReturnNeedle(true);
       bRequestNewNeedle(true);
+      bChangeNeedle(true);
+      bApproval(true);
       bNeedleStock(true);
 
-      dataModel.add(PortalModel(
-          route: Routes.scanCaptureBox,
-          name: 'Change Needle',
-          tipe: 'image',
-          source: 'assets/img/changeNeedle.png',
-          visible: bChangeNeedle.value,
-          args: {
-            'dari': 'change-needle',
-            'title': "Change Needle\nScan and Camera Capture",
-            'halaman': 'scan-camera-capture-box',
-            'tipe': 'change',
-          }));
-      dataModel.add(PortalModel(
-          route: Routes.missingFragment,
-          name: 'Missing Fragment',
-          tipe: 'image',
-          source: 'assets/img/missingFragment.png',
-          visible: bMissingFragment.value));
-      dataModel
-          .add(PortalModel(route: Routes.approval, name: 'Approval', tipe: 'image', source: 'assets/img/approval.png', visible: bApproval.value));
-      dataModel.add(PortalModel(
-          route: Routes.scanCaptureBox,
-          name: 'Return Needle',
-          tipe: 'image',
-          source: 'assets/img/returnNeedle.png',
-          visible: bReturnNeedle.value,
-          args: {
-            'dari': 'return-needle',
-            'title': "Return Needle\nScan and Camera Capture",
-            'halaman': 'scan-camera-capture-box',
-            'tipe': 'return',
-          }));
       dataModel.add(PortalModel(
           route: Routes.requestNewNeedle,
           name: 'Request New Needle',
           tipe: 'image',
           source: 'assets/img/requestNewNeedle.png',
-          visible: bRequestNewNeedle.value));
+          visible: bRequestNewNeedle.value,
+          args: {
+            'step': '1',
+          }));
+      // dataModel.add(PortalModel(
+      //     route: Routes.scanCaptureBox,
+      //     name: 'Change Needle',
+      //     tipe: 'image',
+      //     source: 'assets/img/changeNeedle.png',
+      //     visible: bChangeNeedle.value,
+      //     args: {
+      //       'dari': 'change-needle',
+      //       'title': "Change Needle\nScan and Camera Capture",
+      //       'halaman': 'scan-camera-capture-box',
+      //       'tipe': 'change',
+      //     }));
+      dataModel.add(PortalModel(
+          route: Routes.changeNeedle,
+          name: 'Change Needle',
+          tipe: 'image',
+          source: 'assets/img/changeNeedle.png',
+          visible: bChangeNeedle.value,
+          args: {
+            'step': '1',
+          }));
+      dataModel
+          .add(PortalModel(route: Routes.approval, name: 'Approval', tipe: 'image', source: 'assets/img/approval.png', visible: bApproval.value));
       dataModel.add(PortalModel(
           route: Routes.needleStock, name: 'Needle Stock', tipe: 'image', source: 'assets/img/needleStock.png', visible: bNeedleStock.value));
     } else {

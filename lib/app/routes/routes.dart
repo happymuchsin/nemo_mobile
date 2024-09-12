@@ -2,25 +2,25 @@ import 'package:get/get.dart';
 import 'package:nemo/app/bindings/approval_binding.dart';
 import 'package:nemo/app/bindings/change_needle_binding.dart';
 import 'package:nemo/app/bindings/login_binding.dart';
-import 'package:nemo/app/bindings/missing_fragment_binding.dart';
+import 'package:nemo/app/bindings/xx_missing_fragment_binding.dart';
 import 'package:nemo/app/bindings/needle_stock_binding.dart';
 import 'package:nemo/app/bindings/portal_binding.dart';
-import 'package:nemo/app/bindings/replacement_needle_binding.dart';
+import 'package:nemo/app/bindings/xx_replacement_needle_binding.dart';
 import 'package:nemo/app/bindings/request_new_needle_binding.dart';
-import 'package:nemo/app/bindings/return_needle_binding.dart';
-import 'package:nemo/app/bindings/scan_capture_binding.dart';
-import 'package:nemo/app/bindings/scan_capture_box_binding.dart';
+import 'package:nemo/app/bindings/xx_return_needle_binding.dart';
+import 'package:nemo/app/bindings/xx_scan_capture_binding.dart';
+import 'package:nemo/app/bindings/xx_scan_capture_box_binding.dart';
 import 'package:nemo/app/ui/pages/approval_page/approval_page.dart';
 import 'package:nemo/app/ui/pages/change_needle_page/change_needle_page.dart';
 import 'package:nemo/app/ui/pages/login_page/login_page.dart';
-import 'package:nemo/app/ui/pages/missing_fragment_page/missing_fragment_page.dart';
+import 'package:nemo/app/ui/pages/xx_missing_fragment_page/xx_missing_fragment_page.dart';
 import 'package:nemo/app/ui/pages/needle_stock_page/needle_stock_page.dart';
 import 'package:nemo/app/ui/pages/portal_page/portal_page.dart';
-import 'package:nemo/app/ui/pages/replacement_needle_page/replacement_needle_page.dart';
+import 'package:nemo/app/ui/pages/xx_replacement_needle_page/xx_replacement_needle_page.dart';
 import 'package:nemo/app/ui/pages/request_new_needle_page/request_new_needle_page.dart';
-import 'package:nemo/app/ui/pages/return_needle_page/return_needle_page.dart';
-import 'package:nemo/app/ui/pages/scan_capture_box_page/scan_capture_box_page.dart';
-import 'package:nemo/app/ui/pages/scan_capture_page/scan_capture_page.dart';
+import 'package:nemo/app/ui/pages/xx_return_needle_page/xx_return_needle_page.dart';
+import 'package:nemo/app/ui/pages/xx_scan_capture_box_page/xx_scan_capture_box_page.dart';
+import 'package:nemo/app/ui/pages/xx_scan_capture_page/xx_scan_capture_page.dart';
 
 abstract class AppPages {
   static final pages = [

@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 import 'package:nemo/app/ui/global_widgets/appbar.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
 import 'package:nemo/app/ui/global_widgets/fixed_form.dart';
-import '../../../controllers/replacement_needle_controller.dart';
+import '../../../controllers/xx_replacement_needle_controller.dart';
 
 class ReplacementNeedlePage extends GetView<ReplacementNeedleController> {
   const ReplacementNeedlePage({super.key});

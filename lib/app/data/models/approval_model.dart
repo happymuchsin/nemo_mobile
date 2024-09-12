@@ -23,6 +23,10 @@ class ApprovalModel with _$ApprovalModel {
     String? boxCard,
     int? needleId,
     String? gambar,
+    String? requestDate,
+    String? requestTime,
+    String? approvalName,
+    String? approvalUsername,
   }) = _ApprovalModel;
 
   factory ApprovalModel.fromJson(Map<String, dynamic> json) => _$ApprovalModelFromJson(json);

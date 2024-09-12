@@ -3,6 +3,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/utils/global_context.dart';
@@ -14,11 +15,12 @@ headerFile(
   double paddingTop = 10,
   double paddingRight = 10,
   double paddingBottom = 10,
+  axis = MainAxisAlignment.start,
 }) {
   return Container(
     margin: EdgeInsets.fromLTRB(paddingLeft, paddingTop, paddingRight, paddingBottom),
     child: Row(
-      mainAxisAlignment: MainAxisAlignment.start,
+      mainAxisAlignment: axis,
       children: [
         Text(
           text,
@@ -29,11 +31,30 @@ headerFile(
   );
 }
 
-thumbImage(path, {int h = 50, int w = 50}) {
+boxThumbImage(path, {double h = 50, double w = 50}) {
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(10.0),
+    child: thumbImage(path, h: h, w: w),
+  );
+}
+
+addNewImage(status, {isAsset = false, asset}) {
+  return Container(
+    decoration: BoxDecoration(
+      image: isAsset ? DecorationImage(image: AssetImage(asset), fit: BoxFit.fill) : null,
+      color: status ? Colors.red : Colors.grey[300],
+    ),
+    width: double.maxFinite,
+    height: double.maxFinite,
+    child: const Icon(FontAwesomeIcons.plus),
+  );
+}
+
+thumbImage(path, {double h = 50, double w = 50}) {
   return Image.file(
     File(path),
-    cacheHeight: h,
-    cacheWidth: w,
+    height: h,
+    width: w,
     fit: BoxFit.contain,
   );
 }

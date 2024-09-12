@@ -4,7 +4,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nemo/app/ui/global_widgets/appbar.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
-import '../../../controllers/missing_fragment_controller.dart';
+import '../../../controllers/xx_missing_fragment_controller.dart';
 
 class MissingFragmentPage extends GetView<MissingFragmentController> {
   const MissingFragmentPage({super.key});

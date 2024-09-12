@@ -37,6 +37,10 @@ mixin _$ApprovalModel {
   String? get boxCard => throw _privateConstructorUsedError;
   int? get needleId => throw _privateConstructorUsedError;
   String? get gambar => throw _privateConstructorUsedError;
+  String? get requestDate => throw _privateConstructorUsedError;
+  String? get requestTime => throw _privateConstructorUsedError;
+  String? get approvalName => throw _privateConstructorUsedError;
+  String? get approvalUsername => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -67,7 +71,11 @@ abstract class $ApprovalModelCopyWith<$Res> {
       String? size,
       String? boxCard,
       int? needleId,
-      String? gambar});
+      String? gambar,
+      String? requestDate,
+      String? requestTime,
+      String? approvalName,
+      String? approvalUsername});
 }
 
 /// @nodoc
@@ -100,6 +108,10 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
     Object? boxCard = freezed,
     Object? needleId = freezed,
     Object? gambar = freezed,
+    Object? requestDate = freezed,
+    Object? requestTime = freezed,
+    Object? approvalName = freezed,
+    Object? approvalUsername = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -170,6 +182,22 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
           ? _value.gambar
           : gambar // ignore: cast_nullable_to_non_nullable
               as String?,
+      requestDate: freezed == requestDate
+          ? _value.requestDate
+          : requestDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      requestTime: freezed == requestTime
+          ? _value.requestTime
+          : requestTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalName: freezed == approvalName
+          ? _value.approvalName
+          : approvalName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalUsername: freezed == approvalUsername
+          ? _value.approvalUsername
+          : approvalUsername // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -199,7 +227,11 @@ abstract class _$$ApprovalModelImplCopyWith<$Res>
       String? size,
       String? boxCard,
       int? needleId,
-      String? gambar});
+      String? gambar,
+      String? requestDate,
+      String? requestTime,
+      String? approvalName,
+      String? approvalUsername});
 }
 
 /// @nodoc
@@ -230,6 +262,10 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
     Object? boxCard = freezed,
     Object? needleId = freezed,
     Object? gambar = freezed,
+    Object? requestDate = freezed,
+    Object? requestTime = freezed,
+    Object? approvalName = freezed,
+    Object? approvalUsername = freezed,
   }) {
     return _then(_$ApprovalModelImpl(
       id: null == id
@@ -300,6 +336,22 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
           ? _value.gambar
           : gambar // ignore: cast_nullable_to_non_nullable
               as String?,
+      requestDate: freezed == requestDate
+          ? _value.requestDate
+          : requestDate // ignore: cast_nullable_to_non_nullable
+              as String?,
+      requestTime: freezed == requestTime
+          ? _value.requestTime
+          : requestTime // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalName: freezed == approvalName
+          ? _value.approvalName
+          : approvalName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      approvalUsername: freezed == approvalUsername
+          ? _value.approvalUsername
+          : approvalUsername // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -324,7 +376,11 @@ class _$ApprovalModelImpl implements _ApprovalModel {
       this.size,
       this.boxCard,
       this.needleId,
-      this.gambar});
+      this.gambar,
+      this.requestDate,
+      this.requestTime,
+      this.approvalName,
+      this.approvalUsername});
 
   factory _$ApprovalModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$ApprovalModelImplFromJson(json);
@@ -363,10 +419,18 @@ class _$ApprovalModelImpl implements _ApprovalModel {
   final int? needleId;
   @override
   final String? gambar;
+  @override
+  final String? requestDate;
+  @override
+  final String? requestTime;
+  @override
+  final String? approvalName;
+  @override
+  final String? approvalUsername;
 
   @override
   String toString() {
-    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, idCard: $idCard, line: $line, lineId: $lineId, buyer: $buyer, style: $style, srf: $srf, styleId: $styleId, brand: $brand, tipe: $tipe, size: $size, boxCard: $boxCard, needleId: $needleId, gambar: $gambar)';
+    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, idCard: $idCard, line: $line, lineId: $lineId, buyer: $buyer, style: $style, srf: $srf, styleId: $styleId, brand: $brand, tipe: $tipe, size: $size, boxCard: $boxCard, needleId: $needleId, gambar: $gambar, requestDate: $requestDate, requestTime: $requestTime, approvalName: $approvalName, approvalUsername: $approvalUsername)';
   }
 
   @override
@@ -392,30 +456,43 @@ class _$ApprovalModelImpl implements _ApprovalModel {
             (identical(other.boxCard, boxCard) || other.boxCard == boxCard) &&
             (identical(other.needleId, needleId) ||
                 other.needleId == needleId) &&
-            (identical(other.gambar, gambar) || other.gambar == gambar));
+            (identical(other.gambar, gambar) || other.gambar == gambar) &&
+            (identical(other.requestDate, requestDate) ||
+                other.requestDate == requestDate) &&
+            (identical(other.requestTime, requestTime) ||
+                other.requestTime == requestTime) &&
+            (identical(other.approvalName, approvalName) ||
+                other.approvalName == approvalName) &&
+            (identical(other.approvalUsername, approvalUsername) ||
+                other.approvalUsername == approvalUsername));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      username,
-      name,
-      status,
-      idCard,
-      line,
-      lineId,
-      buyer,
-      style,
-      srf,
-      styleId,
-      brand,
-      tipe,
-      size,
-      boxCard,
-      needleId,
-      gambar);
+  int get hashCode => Object.hashAll([
+        runtimeType,
+        id,
+        username,
+        name,
+        status,
+        idCard,
+        line,
+        lineId,
+        buyer,
+        style,
+        srf,
+        styleId,
+        brand,
+        tipe,
+        size,
+        boxCard,
+        needleId,
+        gambar,
+        requestDate,
+        requestTime,
+        approvalName,
+        approvalUsername
+      ]);
 
   @JsonKey(ignore: true)
   @override
@@ -449,7 +526,11 @@ abstract class _ApprovalModel implements ApprovalModel {
       final String? size,
       final String? boxCard,
       final int? needleId,
-      final String? gambar}) = _$ApprovalModelImpl;
+      final String? gambar,
+      final String? requestDate,
+      final String? requestTime,
+      final String? approvalName,
+      final String? approvalUsername}) = _$ApprovalModelImpl;
 
   factory _ApprovalModel.fromJson(Map<String, dynamic> json) =
       _$ApprovalModelImpl.fromJson;
@@ -488,6 +569,14 @@ abstract class _ApprovalModel implements ApprovalModel {
   int? get needleId;
   @override
   String? get gambar;
+  @override
+  String? get requestDate;
+  @override
+  String? get requestTime;
+  @override
+  String? get approvalName;
+  @override
+  String? get approvalUsername;
   @override
   @JsonKey(ignore: true)
   _$$ApprovalModelImplCopyWith<_$ApprovalModelImpl> get copyWith =>

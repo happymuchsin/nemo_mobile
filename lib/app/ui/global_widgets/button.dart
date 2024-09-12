@@ -1,15 +1,132 @@
+import 'dart:io';
+
 import 'package:awesome_dialog/awesome_dialog.dart';
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nemo/app/ui/global_widgets/decoration.dart';
+import 'package:nemo/app/ui/global_widgets/fixed_form.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
+import 'package:nemo/app/ui/global_widgets/notif.dart';
 import 'package:nemo/app/ui/utils/global_context.dart';
 
 late AwesomeDialog xdialog;
 XFile? globalImage;
 final ImagePicker picker = ImagePicker();
+
+btnImageInkWell(controller, image, tipe, {isDoubleTap = true}) {
+  return InkWell(
+    onTap: () {
+      if (image != null) {
+        functionView(
+          'zoom',
+          from: 'path',
+          path: image!.path,
+        );
+      } else {
+        controller.addImage('new', tipe);
+      }
+    },
+    onDoubleTap: isDoubleTap
+        ? () {
+            if (image != null) {
+              controller.addImage('edit', tipe);
+            }
+          }
+        : null,
+    child: image != null ? boxThumbImage(image!.path) : addNewImage(false),
+  );
+}
+
+Future<void> functionView(mode, {XFile? gambar, url = '', from = 'network', path}) async {
+  if (mode == 'take') {
+    if (url == 'not') {
+      if (gambar != null) {
+        await showDialog<String>(
+          context: GlobalService.navigatorKey.currentState!.overlay!.context,
+          builder: (context) => AlertDialog(
+            content: Image.file(File(gambar.path)),
+            actions: [
+              TextButton(
+                onPressed: () => Get.back(),
+                child: const Text('OK'),
+              ),
+            ],
+          ),
+        );
+      } else {
+        notif('Image not Uploaded');
+      }
+    } else {
+      await showDialog<String>(
+        context: GlobalService.navigatorKey.currentState!.overlay!.context,
+        builder: (context) => AlertDialog(
+          content: url == 'not' || gambar != null
+              ? Image.file(File(gambar!.path))
+              : Image.network(
+                  url,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Text('Get Image Error');
+                  },
+                ),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  } else if (mode == 'zoom') {
+    if (from == 'network') {
+      await showDialog<String>(
+        context: GlobalService.navigatorKey.currentState!.overlay!.context,
+        builder: (context) => AlertDialog(
+          content: Image.network(
+            url,
+            errorBuilder: (c, e, s) {
+              return Image.asset('assets/img/view.png');
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    } else if (from == 'path') {
+      await showDialog<String>(
+        context: GlobalService.navigatorKey.currentState!.overlay!.context,
+        builder: (context) => AlertDialog(
+          content: ExtendedImage.file(
+            File(path),
+            // enableLoadState: true,
+            // errorBuilder: (c, e, s) {
+            //   return Image.asset('assets/img/view.png');
+            // },
+            mode: ExtendedImageMode.gesture,
+            initGestureConfigHandler: (state) {
+              return GestureConfig(
+                inPageView: true,
+              );
+            },
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Get.back(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
+    }
+  }
+}
 
 iconBtn({VoidCallback? onPressed, double? iconSize, IconData? icon, Color? color}) {
   return IconButton(

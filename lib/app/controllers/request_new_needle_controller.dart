@@ -1,14 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
-import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
-import 'package:nemo/app/ui/global_widgets/decoration.dart';
-import 'package:nemo/app/ui/global_widgets/fixed_form.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/global_widgets/needle.dart';
 import 'package:nemo/app/ui/global_widgets/notif.dart';
@@ -16,31 +13,42 @@ import 'package:nemo/app/ui/utils/api.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
 
 class RequestNewNeedleController extends GetxController {
+  var lemparan = Get.arguments;
   final apiReq = Api();
   final localShared = LocalShared();
 
   var person = {}.obs, box = {}.obs, stock = {}.obs;
-  var sIdCard = "".obs,
+  var step = "".obs,
+      selectedStatus = "".obs,
+      sIdCard = "".obs,
       sBoxCard = "".obs,
       deviceType = "".obs,
       idCard = "".obs,
       boxCard = "".obs,
-      sBuyer = "".obs,
-      sStyle = "".obs,
-      sSrf = "".obs,
-      sApproval = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lStyle = [].obs, lSrf = [].obs, lApproval = [].obs;
+      sTengah = "".obs,
+      sBelakang = "".obs,
+      sSrf = "".obs;
+  var lIdCard = [].obs, lBoxCard = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
+  var bulan = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
+  var tahun = [];
+
+  var tSelectedStatus = TextEditingController();
   var tIdCard = TextEditingController();
   var tUsername = TextEditingController();
   var tName = TextEditingController();
+  var tLine = TextEditingController();
+  var tStatus = TextEditingController();
+  var tRemark = TextEditingController();
+  var tDepan = TextEditingController();
+  var tBuyer = TextEditingController();
+  var tSeason = TextEditingController();
+  var tStyle = TextEditingController();
   var tBoxCard = TextEditingController();
   var tBrand = TextEditingController();
   var tTipe = TextEditingController();
   var tSize = TextEditingController();
-  var tRemark = TextEditingController();
-  var tLine = TextEditingController();
 
   var pembantu = TextEditingController();
 
@@ -49,76 +57,15 @@ class RequestNewNeedleController extends GetxController {
     super.onReady();
 
     deviceType(getDevice());
-    spinner('buyer', '');
-    spinner('approval', '');
-    scanIdCard();
-  }
-
-  Future<void> spinner(tipe, x) async {
-    EasyLoading.show();
-    Map<String, dynamic> data = {};
-    var a = await apiReq.baseUrl();
-    data['x'] = x;
-    data['area_id'] = await localShared.bacaInt('area_id');
-    data['username'] = await localShared.baca('username');
-    if (tipe == 'buyer') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        lBuyer(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'style') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        sStyle('');
-        sSrf('');
-        lStyle(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'srf') {
-      data['tipe'] = tipe;
-      data['buyer'] = sBuyer.value;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        sSrf('');
-        lSrf(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else if (tipe == 'approval') {
-      data['tipe'] = tipe;
-      var r = await apiReq.makeRequest("$a/spinner", data);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        lApproval(r['data']);
-      } else if (r['success'] == 423) {
-        EasyLoading.dismiss();
-      } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
-      }
-    } else {
-      lBuyer();
-      lStyle();
-      lSrf();
-      lApproval();
+    step(lemparan[0]['step']);
+    var month = DateFormat('MMM').format(DateTime.now()).toUpperCase();
+    var year = DateFormat('yy').format(DateTime.now());
+    for (var i = int.parse(year) + 1; i >= 23; i--) {
+      tahun.add(i);
     }
+    sTengah(month);
+    sBelakang(year);
+    scanIdCard();
   }
 
   Future<void> scanIdCard() async {
@@ -150,9 +97,9 @@ class RequestNewNeedleController extends GetxController {
           cardScan('Scan ID Card'),
         ],
       ),
-      // onDismissCallback: (p0) {
-      //   fIdCard.unfocus();
-      // },
+      onDismissCallback: (p0) {
+        fIdCard.unfocus();
+      },
       dismissOnTouchOutside: true,
     );
   }
@@ -191,45 +138,47 @@ class RequestNewNeedleController extends GetxController {
       tName.text = r['data']['name'];
       person(r['data']);
       idCard(r['data']['rfid']);
-      dialogCustomBody(
-        width: Get.width * .8,
-        type: DialogType.noHeader,
-        widget: Container(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
-              ),
-              Center(
-                child: Text(
-                  'Username : ${person['username']}',
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                ),
-              ),
-              Center(
-                child: Text(
-                  'Name : ${person['name']}',
-                  style: const TextStyle(
-                    fontSize: 30,
-                  ),
-                  overflow: TextOverflow.ellipsis,
-                ),
-              ),
-              const SizedBox(
-                height: 30,
-              ),
-            ],
-          ),
-        ),
-        onDismissCallback: (p0) {
-          fIdCard.unfocus();
-          scanBoxCard();
-        },
-        dismissOnTouchOutside: true,
-      );
+      fIdCard.unfocus();
+    } else {
+      EasyLoading.dismiss();
+      notif(r['message']);
+    }
+  }
+
+  Future<void> changeStatus(status) async {
+    selectedStatus(status);
+    tSelectedStatus.text = status;
+    tRemark.text = '';
+  }
+
+  Future<void> next() async {
+    if (idCard.value == '') {
+      notif('Please scan ID Card');
+    } else if (selectedStatus.value == '') {
+      notif('Please select Request Status');
+    } else if (selectedStatus.value == 'Others' && tRemark.text == '') {
+      notif('Please insert Remark');
+    } else {
+      scanBoxCard();
+    }
+  }
+
+  Future<void> cari() async {
+    tBuyer.text = '';
+    tSeason.text = '';
+    tStyle.text = '';
+    sSrf('');
+    EasyLoading.show();
+    Map<String, dynamic> data = {};
+    data['srf'] = tDepan.text + sTengah.value + sBelakang.value;
+    var a = await apiReq.baseUrl();
+    var r = await apiReq.makeRequest('$a/style/get', data);
+    if (r['success'] == 200) {
+      EasyLoading.dismiss();
+      tBuyer.text = r['data']['buyer'];
+      tSeason.text = r['data']['season'];
+      tStyle.text = r['data']['style'];
+      sSrf(r['data']['id'].toString());
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
@@ -305,6 +254,7 @@ class RequestNewNeedleController extends GetxController {
       box(r['data']['box']);
       stock(r['data']['stock']);
       boxCard(r['data']['box']['rfid']);
+      step('2');
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
@@ -312,21 +262,24 @@ class RequestNewNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sBuyer.value == '') {
-      notif('Please select Buyer');
-    } else if (sStyle.value == '') {
-      notif('Please select Style');
-    } else if (sSrf.value == '') {
-      notif('Please select SRF');
+    if (sSrf.value == '') {
+      notif('Please search SRF');
+    } else if (boxCard.value == '') {
+      notif('Please scan Box Card');
     } else {
       EasyLoading.show();
       Map<String, dynamic> data = {};
       data['idCard'] = idCard.value;
-      data['style'] = sSrf.value;
       data['boxCard'] = boxCard.value;
+      data['style'] = sSrf.value;
       data['needle'] = stock['needle']['id'];
       data['username'] = await localShared.baca('username');
       data['status'] = "REQUEST NEW";
+      data['request_status'] = tSelectedStatus.text;
+      data['remark'] = tRemark.text;
+      data['reff'] = await localShared.baca('reff');
+      data['area_id'] = await localShared.bacaInt('area_id');
+      data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
       var a = await apiReq.baseUrl();
       var r = await apiReq.makeRequest("$a/needle/save", data, second: 60);
       if (r['success'] == 200) {
@@ -336,122 +289,6 @@ class RequestNewNeedleController extends GetxController {
           tipe: 'success',
           onDismissCallback: (p0) {
             Get.back();
-          },
-        );
-      } else {
-        EasyLoading.dismiss();
-        if (r['data'] == 'approval') {
-          notif(
-            r['message'],
-            onDismissCallback: (p0) {
-              dialogCustomBody(
-                type: DialogType.noHeader,
-                widget: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      modalTitle(text: 'Approved By', color: Colors.teal),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      Obx(
-                        () => Container(
-                          padding: const EdgeInsets.all(10),
-                          child: DropdownButtonFormField2(
-                            style: TextStyle(fontSize: deviceType.value == 'tablet' ? 20 : 14, color: Colors.black),
-                            isExpanded: true,
-                            decoration: wxInputDecoration(text: 'Approved By'),
-                            value: sApproval.value.isNotEmpty ? sApproval.value : null,
-                            onChanged: (e) {
-                              sApproval(e.toString());
-                            },
-                            items: lApproval
-                                .map(
-                                  (e) => DropdownMenuItem(
-                                    value: e['id'].toString(),
-                                    child: Text(
-                                      e['name'].toString(),
-                                    ),
-                                  ),
-                                )
-                                .toList(),
-                            dropdownSearchData: wxDropdownSearchData(controller: pembantu),
-                            onMenuStateChange: (isOpen) {
-                              if (!isOpen) {
-                                pembantu.clear();
-                              }
-                            },
-                          ),
-                        ),
-                      ),
-                      inputForm(false, 1, tRemark, 'Remark'),
-                      Row(
-                        children: [
-                          exBtn(
-                              type: 'row',
-                              onPressed: () {
-                                xdialog.dismiss();
-                              },
-                              backgroundColor: Colors.red,
-                              isIcon: true,
-                              icon: FontAwesomeIcons.x,
-                              isText: deviceType.value == 'tablet' ? true : false,
-                              text: 'Cancel'),
-                          const SizedBox(
-                            width: 20,
-                          ),
-                          exBtn(
-                              type: 'row',
-                              onPressed: () {
-                                simpan();
-                              },
-                              isIcon: true,
-                              icon: FontAwesomeIcons.floppyDisk,
-                              isText: deviceType.value == 'tablet' ? true : false,
-                              text: 'Save'),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              );
-            },
-          );
-        } else {
-          notif(r['message']);
-        }
-      }
-    }
-  }
-
-  Future<void> simpan() async {
-    if (sApproval.value == '') {
-      notif('Please select Approved By');
-    } else if (tRemark.text == '') {
-      notif('Please insert Remark');
-    } else {
-      EasyLoading.show();
-      Map<String, dynamic> data = {};
-      data['tipe'] = 'request-new';
-      data['idCard'] = idCard.value;
-      data['style'] = sSrf.value;
-      data['boxCard'] = boxCard.value;
-      data['approval'] = sApproval.value;
-      data['reff'] = await localShared.baca('reff');
-      data['area_id'] = await localShared.bacaInt('area_id');
-      data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
-      data['username'] = await localShared.baca('username');
-      data['remark'] = tRemark.text;
-      var a = await apiReq.baseUrl();
-      var r = await apiReq.makeRequest("$a/needle/approval", data, second: 60);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        xdialog.dismiss();
-        notif(
-          r['message'],
-          tipe: 'success',
-          onDismissCallback: (p0) {
-            Get.back(result: 'refresh');
           },
         );
       } else {

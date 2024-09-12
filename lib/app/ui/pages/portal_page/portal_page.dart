@@ -27,7 +27,7 @@ class PortalPage extends GetView<PortalController> {
           () => GridView.builder(
             shrinkWrap: true,
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
+              crossAxisCount: 2,
               crossAxisSpacing: 4.0,
               mainAxisSpacing: 4.0,
               mainAxisExtent: controller.deviceType.value == 'tablet' ? 225 : 120,

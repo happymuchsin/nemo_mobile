@@ -1,5 +1,5 @@
 import 'package:get/get.dart';
-import '../controllers/missing_fragment_controller.dart';
+import '../controllers/xx_missing_fragment_controller.dart';
 
 class MissingFragmentBinding implements Bindings {
   @override

@@ -5,10 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:nemo/app/ui/global_widgets/appbar.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
-import '../../../controllers/scan_capture_controller.dart';
+import '../../../controllers/xx_scan_capture_box_controller.dart';
 
-class ScanCapturePage extends GetView<ScanCaptureController> {
-  const ScanCapturePage({super.key});
+class ScanCaptureBoxPage extends GetView<ScanCaptureBoxController> {
+  const ScanCaptureBoxPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -42,19 +42,60 @@ class ScanCapturePage extends GetView<ScanCaptureController> {
                     height: Get.height * .01,
                   ),
                 SizedBox(
-                  height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+                  height: Get.height * .09,
                   width: Get.width * .75,
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      btn(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            children: [
+                              Text(
+                                'Username',
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
+                                ),
+                              ),
+                              Text(
+                                ': ${controller.person.values == [] ? '' : controller.person['username']}',
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                'Name',
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
+                                ),
+                              ),
+                              Text(
+                                ': ${controller.person.values == [] ? '' : controller.person['name']}',
+                                style: TextStyle(
+                                  fontSize: controller.deviceType.value == 'tablet' ? 20 : 12,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: controller.deviceType.value == 'tablet' ? Get.height * .05 : Get.height * .07,
+                        child: btn(
                           type: 'row',
                           onPressed: () => controller.reset(),
                           backgroundColor: Colors.red,
                           isIcon: true,
                           icon: FontAwesomeIcons.rotateLeft,
                           isText: true,
-                          text: 'Reset'),
+                          text: 'Reset',
+                        ),
+                      ),
                     ],
                   ),
                 ),

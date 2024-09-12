@@ -25,6 +25,10 @@ _$ApprovalModelImpl _$$ApprovalModelImplFromJson(Map<String, dynamic> json) =>
       boxCard: json['boxCard'] as String?,
       needleId: (json['needleId'] as num?)?.toInt(),
       gambar: json['gambar'] as String?,
+      requestDate: json['requestDate'] as String?,
+      requestTime: json['requestTime'] as String?,
+      approvalName: json['approvalName'] as String?,
+      approvalUsername: json['approvalUsername'] as String?,
     );
 
 Map<String, dynamic> _$$ApprovalModelImplToJson(_$ApprovalModelImpl instance) =>
@@ -46,4 +50,8 @@ Map<String, dynamic> _$$ApprovalModelImplToJson(_$ApprovalModelImpl instance) =>
       'boxCard': instance.boxCard,
       'needleId': instance.needleId,
       'gambar': instance.gambar,
+      'requestDate': instance.requestDate,
+      'requestTime': instance.requestTime,
+      'approvalName': instance.approvalName,
+      'approvalUsername': instance.approvalUsername,
     };
