@@ -211,7 +211,7 @@ class RequestNewNeedleController extends GetxController {
                 }
               },
               txt: sBoxCard.value),
-          cardScan('Scan Box Card'),
+          cardScan('Scan New Box Card'),
         ],
       ),
       onDismissCallback: (p0) {
@@ -265,7 +265,7 @@ class RequestNewNeedleController extends GetxController {
     if (sSrf.value == '') {
       notif('Please search SRF');
     } else if (boxCard.value == '') {
-      notif('Please scan Box Card');
+      notif('Please Scan New Box Card');
     } else {
       EasyLoading.show();
       Map<String, dynamic> data = {};

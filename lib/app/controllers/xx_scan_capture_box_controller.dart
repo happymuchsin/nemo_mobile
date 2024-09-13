@@ -222,7 +222,7 @@ class ScanCaptureBoxController extends GetxController {
                 }
               },
               txt: sBoxCard.value),
-          cardScan('Scan Box Card'),
+          cardScan('Scan New Box Card'),
         ],
       ),
       onDismissCallback: (p0) {
@@ -272,7 +272,7 @@ class ScanCaptureBoxController extends GetxController {
     if (idCard.value == '') {
       notif('Please scan ID Card');
     } else if (boxCard.value == '') {
-      notif('Please scan Box Card');
+      notif('Please Scan New Box Card');
     } else {
       cameraController.pausePreview();
       Map<String, dynamic> dilempar = {};

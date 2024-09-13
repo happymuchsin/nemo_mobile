@@ -95,7 +95,7 @@ class ReplacementNeedleController extends GetxController {
                 }
               },
               txt: sBoxCard.value),
-          cardScan('Scan Box Card'),
+          cardScan('Scan New Box Card'),
         ],
       ),
       onDismissCallback: (p0) {

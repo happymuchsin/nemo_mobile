@@ -291,7 +291,7 @@ class ChangeNeedleController extends GetxController {
                 }
               },
               txt: sBoxCard.value),
-          cardScan(tipe == 'return' ? 'Scan Box Return Card' : 'Scan Box Card'),
+          cardScan(tipe == 'return' ? 'Scan Box Return Card' : 'Scan New Box Card'),
         ],
       ),
       onDismissCallback: (p0) {
@@ -358,7 +358,7 @@ class ChangeNeedleController extends GetxController {
     } else {
       if (sCondition.value != 'Missing Fragment') {
         if (boxCard.value == '') {
-          notif('Please scan Box Card');
+          notif('Please Scan New Box Card');
         } else if (sCondition.value == 'Good' && boxReturnCard.value == '') {
           notif('Please scan Box Return Card');
         } else {
