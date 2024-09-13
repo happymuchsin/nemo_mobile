@@ -120,7 +120,7 @@ class ApprovalController extends GetxController {
       if (tipe == 'approval') {
         data['rfid'] = 'dev';
       } else {
-        data['rfid'] = 'ul2c2';
+        data['rfid'] = 'ul3c1';
       }
     }
     data['area_id'] = await localShared.bacaInt('area_id');

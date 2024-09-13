@@ -67,10 +67,11 @@ class ChangeNeedleController extends GetxController {
     'Broken Missing Fragment',
   ];
   var images = [
-    'assets/img/deformed.png',
-    'assets/img/routine.png',
-    'assets/img/change.png',
     'assets/img/broken.png',
+    // 'assets/img/routine.png',
+    'assets/img/change.png',
+    'assets/img/change.png',
+    'assets/img/deformed.png',
   ].obs;
 
   @override
@@ -169,7 +170,7 @@ class ChangeNeedleController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = 'ul2c2';
+      data['rfid'] = 'ul3c1';
     }
     data['area_id'] = await localShared.bacaInt('area_id');
     data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
