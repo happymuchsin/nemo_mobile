@@ -27,8 +27,12 @@ class RequestNewNeedleController extends GetxController {
       boxCard = "".obs,
       sTengah = "".obs,
       sBelakang = "".obs,
-      sSrf = "".obs;
-  var lIdCard = [].obs, lBoxCard = [].obs;
+      sSrf = "".obs,
+      sArea = "".obs,
+      sBuyer = "".obs,
+      sSeason = "".obs,
+      sStyle = "".obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lSeason = [].obs, lStyle = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var bulan = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -53,7 +57,7 @@ class RequestNewNeedleController extends GetxController {
   var pembantu = TextEditingController();
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
 
     deviceType(getDevice());
@@ -65,7 +69,65 @@ class RequestNewNeedleController extends GetxController {
     }
     sTengah(month);
     sBelakang(year);
+    sArea(await localShared.baca('area'));
+    if (sArea.value != 'SAMPLE ROOM') {
+      spinner('buyer', '');
+    }
     scanIdCard();
+  }
+
+  Future<void> spinner(tipe, x) async {
+    EasyLoading.show();
+    Map<String, dynamic> data = {};
+    var a = await apiReq.baseUrl();
+    data['x'] = x;
+    data['area_id'] = await localShared.bacaInt('area_id');
+    data['username'] = await localShared.baca('username');
+    if (tipe == 'buyer') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        lBuyer(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'season') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sSeason('');
+        sStyle('');
+        lSeason(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'style') {
+      data['tipe'] = tipe;
+      data['master_buyer_id'] = sBuyer.value;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sStyle('');
+        lStyle(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else {
+      lBuyer();
+      lSeason();
+      lStyle();
+    }
   }
 
   Future<void> scanIdCard() async {
@@ -123,7 +185,7 @@ class RequestNewNeedleController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = 'ul3c1';
+      data['rfid'] = 'us1c1';
     }
     data['area_id'] = await localShared.bacaInt('area_id');
     data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
@@ -262,38 +324,56 @@ class RequestNewNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    if (sSrf.value == '') {
-      notif('Please search SRF');
-    } else if (boxCard.value == '') {
-      notif('Please Scan New Box Card');
-    } else {
-      EasyLoading.show();
-      Map<String, dynamic> data = {};
-      data['idCard'] = idCard.value;
-      data['boxCard'] = boxCard.value;
-      data['style'] = sSrf.value;
-      data['needle'] = stock['needle']['id'];
-      data['username'] = await localShared.baca('username');
-      data['status'] = "REQUEST NEW";
-      data['request_status'] = tSelectedStatus.text;
-      data['remark'] = tRemark.text;
-      data['reff'] = await localShared.baca('reff');
-      data['area_id'] = await localShared.bacaInt('area_id');
-      data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
-      var a = await apiReq.baseUrl();
-      var r = await apiReq.makeRequest("$a/needle/save", data, second: 60);
-      if (r['success'] == 200) {
-        EasyLoading.dismiss();
-        notif(
-          r['message'],
-          tipe: 'success',
-          onDismissCallback: (p0) {
-            Get.back();
-          },
-        );
+    var next = 0;
+    if (sArea.value == 'SAMPLE ROOM') {
+      if (sSrf.value == '') {
+        notif('Please search SRF');
       } else {
-        EasyLoading.dismiss();
-        notif(r['message']);
+        next = 1;
+      }
+    } else {
+      if (sBuyer.value == '') {
+        notif('Please select Buyer');
+      } else if (sSeason.value == '') {
+        notif('Please select Season');
+      } else if (sStyle.value == '') {
+        notif('Please select Style');
+      } else {
+        next = 1;
+      }
+    }
+    if (next == 1) {
+      if (boxCard.value == '') {
+        notif('Please Scan New Box Card');
+      } else {
+        EasyLoading.show();
+        Map<String, dynamic> data = {};
+        data['idCard'] = idCard.value;
+        data['boxCard'] = boxCard.value;
+        data['style'] = sArea.value == 'SAMPLE ROOM' ? sSrf.value : sStyle.value;
+        data['needle'] = stock['needle']['id'];
+        data['username'] = await localShared.baca('username');
+        data['status'] = "REQUEST NEW";
+        data['request_status'] = tSelectedStatus.text;
+        data['remark'] = tRemark.text;
+        data['reff'] = await localShared.baca('reff');
+        data['area_id'] = await localShared.bacaInt('area_id');
+        data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
+        var a = await apiReq.baseUrl();
+        var r = await apiReq.makeRequest("$a/needle/save", data, second: 60);
+        if (r['success'] == 200) {
+          EasyLoading.dismiss();
+          notif(
+            r['message'],
+            tipe: 'success',
+            onDismissCallback: (p0) {
+              Get.back();
+            },
+          );
+        } else {
+          EasyLoading.dismiss();
+          notif(r['message']);
+        }
       }
     }
   }

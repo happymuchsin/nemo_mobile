@@ -21,7 +21,7 @@ class ChangeNeedleController extends GetxController {
   final apiReq = Api();
   final localShared = LocalShared();
   var person = {}.obs, box = {}.obs, stock = {}.obs;
-  var lIdCard = [].obs, lBoxCard = [].obs, lBoxReturnCard = [].obs, lApproval = [].obs;
+  var lIdCard = [].obs, lBoxCard = [].obs, lBoxReturnCard = [].obs, lApproval = [].obs, lBuyer = [].obs, lSeason = [].obs, lStyle = [].obs;
   var deviceType = "".obs,
       step = "".obs,
       idCard = "".obs,
@@ -33,7 +33,11 @@ class ChangeNeedleController extends GetxController {
       sBelakang = "".obs,
       sSrf = "".obs,
       sCondition = "".obs,
-      sApproval = "".obs;
+      sApproval = "".obs,
+      sArea = "".obs,
+      sBuyer = "".obs,
+      sSeason = "".obs,
+      sStyle = "".obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
   var bulan = ['JAN', 'FEB', 'MAR', 'APR', 'MAY', 'JUN', 'JUL', 'AUG', 'SEP', 'OCT', 'NOV', 'DEC'];
@@ -75,7 +79,7 @@ class ChangeNeedleController extends GetxController {
   ].obs;
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
 
     deviceType(getDevice());
@@ -87,6 +91,10 @@ class ChangeNeedleController extends GetxController {
     }
     sTengah(month);
     sBelakang(year);
+    sArea(await localShared.baca('area'));
+    if (sArea.value != 'SAMPLE ROOM') {
+      spinner('buyer', '');
+    }
     spinner('approval', '');
     scanIdCard();
   }
@@ -110,8 +118,51 @@ class ChangeNeedleController extends GetxController {
         EasyLoading.dismiss();
         notif(r['message']);
       }
+    } else if (tipe == 'buyer') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        lBuyer(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'season') {
+      data['tipe'] = tipe;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sSeason('');
+        sStyle('');
+        lSeason(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
+    } else if (tipe == 'style') {
+      data['tipe'] = tipe;
+      data['master_buyer_id'] = sBuyer.value;
+      var r = await apiReq.makeRequest("$a/spinner", data);
+      if (r['success'] == 200) {
+        EasyLoading.dismiss();
+        sStyle('');
+        lStyle(r['data']);
+      } else if (r['success'] == 423) {
+        EasyLoading.dismiss();
+      } else {
+        EasyLoading.dismiss();
+        notif(r['message']);
+      }
     } else {
       lApproval();
+      lBuyer();
+      lSeason();
+      lStyle();
     }
   }
 
@@ -170,7 +221,7 @@ class ChangeNeedleController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = 'ul3c1';
+      data['rfid'] = 'us1c1';
     }
     data['area_id'] = await localShared.bacaInt('area_id');
     data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
@@ -352,29 +403,43 @@ class ChangeNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    var next = 'not';
-    if (sSrf.value == '') {
-      notif('Please search SRF');
-    } else {
-      if (sCondition.value != 'Missing Fragment') {
-        if (boxCard.value == '') {
-          notif('Please Scan New Box Card');
-        } else if (sCondition.value == 'Good' && boxReturnCard.value == '') {
-          notif('Please scan Box Return Card');
-        } else {
-          next = 'yes';
-        }
+    var next = 0;
+    if (sArea.value == 'SAMPLE ROOM') {
+      if (sSrf.value == '') {
+        notif('Please search SRF');
       } else {
-        next = 'yes';
+        next = 1;
+      }
+    } else {
+      if (sBuyer.value == '') {
+        notif('Please select Buyer');
+      } else if (sSeason.value == '') {
+        notif('Please select Season');
+      } else if (sStyle.value == '') {
+        notif('Please select Style');
+      } else {
+        next = 1;
       }
     }
 
-    if (next == 'yes') {
+    if (sCondition.value != 'Missing Fragment') {
+      if (boxCard.value == '') {
+        notif('Please Scan New Box Card');
+      } else if (sCondition.value == 'Good' && boxReturnCard.value == '') {
+        notif('Please scan Box Return Card');
+      } else {
+        next = 1;
+      }
+    } else {
+      next = 1;
+    }
+
+    if (next == 1) {
       EasyLoading.show();
       List<int> imageBytes = File(gambar.value!.path).readAsBytesSync();
       Map<String, dynamic> data = {};
       data['idCard'] = idCard.value;
-      data['style'] = sSrf.value;
+      data['style'] = sArea.value == 'SAMPLE ROOM' ? sSrf.value : sStyle.value;
       data['boxCard'] = boxCard.value;
       data['boxReturnCard'] = boxReturnCard.value;
       data['needle'] = stock['needle'] != null ? stock['needle']['id'] : null;
