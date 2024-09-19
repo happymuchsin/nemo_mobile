@@ -24,19 +24,7 @@ mixin _$ApprovalModel {
   String? get username => throw _privateConstructorUsedError;
   String? get name => throw _privateConstructorUsedError;
   String? get status => throw _privateConstructorUsedError;
-  String? get idCard => throw _privateConstructorUsedError;
   String? get line => throw _privateConstructorUsedError;
-  int? get lineId => throw _privateConstructorUsedError;
-  String? get buyer => throw _privateConstructorUsedError;
-  String? get style => throw _privateConstructorUsedError;
-  String? get srf => throw _privateConstructorUsedError;
-  int? get styleId => throw _privateConstructorUsedError;
-  String? get brand => throw _privateConstructorUsedError;
-  String? get tipe => throw _privateConstructorUsedError;
-  String? get size => throw _privateConstructorUsedError;
-  String? get boxCard => throw _privateConstructorUsedError;
-  int? get needleId => throw _privateConstructorUsedError;
-  String? get gambar => throw _privateConstructorUsedError;
   String? get requestDate => throw _privateConstructorUsedError;
   String? get requestTime => throw _privateConstructorUsedError;
   String? get approvalName => throw _privateConstructorUsedError;
@@ -59,19 +47,7 @@ abstract class $ApprovalModelCopyWith<$Res> {
       String? username,
       String? name,
       String? status,
-      String? idCard,
       String? line,
-      int? lineId,
-      String? buyer,
-      String? style,
-      String? srf,
-      int? styleId,
-      String? brand,
-      String? tipe,
-      String? size,
-      String? boxCard,
-      int? needleId,
-      String? gambar,
       String? requestDate,
       String? requestTime,
       String? approvalName,
@@ -95,19 +71,7 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
     Object? username = freezed,
     Object? name = freezed,
     Object? status = freezed,
-    Object? idCard = freezed,
     Object? line = freezed,
-    Object? lineId = freezed,
-    Object? buyer = freezed,
-    Object? style = freezed,
-    Object? srf = freezed,
-    Object? styleId = freezed,
-    Object? brand = freezed,
-    Object? tipe = freezed,
-    Object? size = freezed,
-    Object? boxCard = freezed,
-    Object? needleId = freezed,
-    Object? gambar = freezed,
     Object? requestDate = freezed,
     Object? requestTime = freezed,
     Object? approvalName = freezed,
@@ -130,57 +94,9 @@ class _$ApprovalModelCopyWithImpl<$Res, $Val extends ApprovalModel>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      idCard: freezed == idCard
-          ? _value.idCard
-          : idCard // ignore: cast_nullable_to_non_nullable
-              as String?,
       line: freezed == line
           ? _value.line
           : line // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lineId: freezed == lineId
-          ? _value.lineId
-          : lineId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      buyer: freezed == buyer
-          ? _value.buyer
-          : buyer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      style: freezed == style
-          ? _value.style
-          : style // ignore: cast_nullable_to_non_nullable
-              as String?,
-      srf: freezed == srf
-          ? _value.srf
-          : srf // ignore: cast_nullable_to_non_nullable
-              as String?,
-      styleId: freezed == styleId
-          ? _value.styleId
-          : styleId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      brand: freezed == brand
-          ? _value.brand
-          : brand // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tipe: freezed == tipe
-          ? _value.tipe
-          : tipe // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String?,
-      boxCard: freezed == boxCard
-          ? _value.boxCard
-          : boxCard // ignore: cast_nullable_to_non_nullable
-              as String?,
-      needleId: freezed == needleId
-          ? _value.needleId
-          : needleId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      gambar: freezed == gambar
-          ? _value.gambar
-          : gambar // ignore: cast_nullable_to_non_nullable
               as String?,
       requestDate: freezed == requestDate
           ? _value.requestDate
@@ -215,19 +131,7 @@ abstract class _$$ApprovalModelImplCopyWith<$Res>
       String? username,
       String? name,
       String? status,
-      String? idCard,
       String? line,
-      int? lineId,
-      String? buyer,
-      String? style,
-      String? srf,
-      int? styleId,
-      String? brand,
-      String? tipe,
-      String? size,
-      String? boxCard,
-      int? needleId,
-      String? gambar,
       String? requestDate,
       String? requestTime,
       String? approvalName,
@@ -249,19 +153,7 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
     Object? username = freezed,
     Object? name = freezed,
     Object? status = freezed,
-    Object? idCard = freezed,
     Object? line = freezed,
-    Object? lineId = freezed,
-    Object? buyer = freezed,
-    Object? style = freezed,
-    Object? srf = freezed,
-    Object? styleId = freezed,
-    Object? brand = freezed,
-    Object? tipe = freezed,
-    Object? size = freezed,
-    Object? boxCard = freezed,
-    Object? needleId = freezed,
-    Object? gambar = freezed,
     Object? requestDate = freezed,
     Object? requestTime = freezed,
     Object? approvalName = freezed,
@@ -284,57 +176,9 @@ class __$$ApprovalModelImplCopyWithImpl<$Res>
           ? _value.status
           : status // ignore: cast_nullable_to_non_nullable
               as String?,
-      idCard: freezed == idCard
-          ? _value.idCard
-          : idCard // ignore: cast_nullable_to_non_nullable
-              as String?,
       line: freezed == line
           ? _value.line
           : line // ignore: cast_nullable_to_non_nullable
-              as String?,
-      lineId: freezed == lineId
-          ? _value.lineId
-          : lineId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      buyer: freezed == buyer
-          ? _value.buyer
-          : buyer // ignore: cast_nullable_to_non_nullable
-              as String?,
-      style: freezed == style
-          ? _value.style
-          : style // ignore: cast_nullable_to_non_nullable
-              as String?,
-      srf: freezed == srf
-          ? _value.srf
-          : srf // ignore: cast_nullable_to_non_nullable
-              as String?,
-      styleId: freezed == styleId
-          ? _value.styleId
-          : styleId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      brand: freezed == brand
-          ? _value.brand
-          : brand // ignore: cast_nullable_to_non_nullable
-              as String?,
-      tipe: freezed == tipe
-          ? _value.tipe
-          : tipe // ignore: cast_nullable_to_non_nullable
-              as String?,
-      size: freezed == size
-          ? _value.size
-          : size // ignore: cast_nullable_to_non_nullable
-              as String?,
-      boxCard: freezed == boxCard
-          ? _value.boxCard
-          : boxCard // ignore: cast_nullable_to_non_nullable
-              as String?,
-      needleId: freezed == needleId
-          ? _value.needleId
-          : needleId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      gambar: freezed == gambar
-          ? _value.gambar
-          : gambar // ignore: cast_nullable_to_non_nullable
               as String?,
       requestDate: freezed == requestDate
           ? _value.requestDate
@@ -364,19 +208,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
       this.username,
       this.name,
       this.status,
-      this.idCard,
       this.line,
-      this.lineId,
-      this.buyer,
-      this.style,
-      this.srf,
-      this.styleId,
-      this.brand,
-      this.tipe,
-      this.size,
-      this.boxCard,
-      this.needleId,
-      this.gambar,
       this.requestDate,
       this.requestTime,
       this.approvalName,
@@ -394,31 +226,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
   @override
   final String? status;
   @override
-  final String? idCard;
-  @override
   final String? line;
-  @override
-  final int? lineId;
-  @override
-  final String? buyer;
-  @override
-  final String? style;
-  @override
-  final String? srf;
-  @override
-  final int? styleId;
-  @override
-  final String? brand;
-  @override
-  final String? tipe;
-  @override
-  final String? size;
-  @override
-  final String? boxCard;
-  @override
-  final int? needleId;
-  @override
-  final String? gambar;
   @override
   final String? requestDate;
   @override
@@ -430,7 +238,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
 
   @override
   String toString() {
-    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, idCard: $idCard, line: $line, lineId: $lineId, buyer: $buyer, style: $style, srf: $srf, styleId: $styleId, brand: $brand, tipe: $tipe, size: $size, boxCard: $boxCard, needleId: $needleId, gambar: $gambar, requestDate: $requestDate, requestTime: $requestTime, approvalName: $approvalName, approvalUsername: $approvalUsername)';
+    return 'ApprovalModel(id: $id, username: $username, name: $name, status: $status, line: $line, requestDate: $requestDate, requestTime: $requestTime, approvalName: $approvalName, approvalUsername: $approvalUsername)';
   }
 
   @override
@@ -443,20 +251,7 @@ class _$ApprovalModelImpl implements _ApprovalModel {
                 other.username == username) &&
             (identical(other.name, name) || other.name == name) &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.idCard, idCard) || other.idCard == idCard) &&
             (identical(other.line, line) || other.line == line) &&
-            (identical(other.lineId, lineId) || other.lineId == lineId) &&
-            (identical(other.buyer, buyer) || other.buyer == buyer) &&
-            (identical(other.style, style) || other.style == style) &&
-            (identical(other.srf, srf) || other.srf == srf) &&
-            (identical(other.styleId, styleId) || other.styleId == styleId) &&
-            (identical(other.brand, brand) || other.brand == brand) &&
-            (identical(other.tipe, tipe) || other.tipe == tipe) &&
-            (identical(other.size, size) || other.size == size) &&
-            (identical(other.boxCard, boxCard) || other.boxCard == boxCard) &&
-            (identical(other.needleId, needleId) ||
-                other.needleId == needleId) &&
-            (identical(other.gambar, gambar) || other.gambar == gambar) &&
             (identical(other.requestDate, requestDate) ||
                 other.requestDate == requestDate) &&
             (identical(other.requestTime, requestTime) ||
@@ -469,30 +264,8 @@ class _$ApprovalModelImpl implements _ApprovalModel {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hashAll([
-        runtimeType,
-        id,
-        username,
-        name,
-        status,
-        idCard,
-        line,
-        lineId,
-        buyer,
-        style,
-        srf,
-        styleId,
-        brand,
-        tipe,
-        size,
-        boxCard,
-        needleId,
-        gambar,
-        requestDate,
-        requestTime,
-        approvalName,
-        approvalUsername
-      ]);
+  int get hashCode => Object.hash(runtimeType, id, username, name, status, line,
+      requestDate, requestTime, approvalName, approvalUsername);
 
   @JsonKey(ignore: true)
   @override
@@ -514,19 +287,7 @@ abstract class _ApprovalModel implements ApprovalModel {
       final String? username,
       final String? name,
       final String? status,
-      final String? idCard,
       final String? line,
-      final int? lineId,
-      final String? buyer,
-      final String? style,
-      final String? srf,
-      final int? styleId,
-      final String? brand,
-      final String? tipe,
-      final String? size,
-      final String? boxCard,
-      final int? needleId,
-      final String? gambar,
       final String? requestDate,
       final String? requestTime,
       final String? approvalName,
@@ -544,31 +305,7 @@ abstract class _ApprovalModel implements ApprovalModel {
   @override
   String? get status;
   @override
-  String? get idCard;
-  @override
   String? get line;
-  @override
-  int? get lineId;
-  @override
-  String? get buyer;
-  @override
-  String? get style;
-  @override
-  String? get srf;
-  @override
-  int? get styleId;
-  @override
-  String? get brand;
-  @override
-  String? get tipe;
-  @override
-  String? get size;
-  @override
-  String? get boxCard;
-  @override
-  int? get needleId;
-  @override
-  String? get gambar;
   @override
   String? get requestDate;
   @override
