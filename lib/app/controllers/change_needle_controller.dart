@@ -431,7 +431,11 @@ class ChangeNeedleController extends GetxController {
         next = 1;
       }
     } else {
-      next = 1;
+      if (sApproval.value == '') {
+        notif('Please select Request Approval To');
+      } else {
+        next = 1;
+      }
     }
 
     if (next == 1) {
