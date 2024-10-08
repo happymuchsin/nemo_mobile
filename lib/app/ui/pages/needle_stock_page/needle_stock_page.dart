@@ -13,7 +13,7 @@ class NeedleStockPage extends GetView<NeedleStockController> {
   Widget build(BuildContext context) {
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         EasyLoading.dismiss();
         if (didPop) {
           return;

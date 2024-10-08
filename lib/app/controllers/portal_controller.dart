@@ -6,12 +6,14 @@ import 'package:nemo/app/routes/routes.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/utils/api.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:version/version.dart';
 
 class PortalController extends GetxController {
   final apiReq = Api();
   final localShared = LocalShared();
-  var mode = "".obs, username = "".obs, deviceType = "".obs;
+  var mode = "".obs, username = "".obs, deviceType = "".obs, version = "".obs;
   var bChangeNeedle = false.obs, bApproval = false.obs, bRequestNewNeedle = false.obs, bNeedleStock = false.obs;
 
   var dataModel = <PortalModel>[].obs;
@@ -36,10 +38,13 @@ class PortalController extends GetxController {
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
 
     deviceType(getDevice());
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Version now = Version.parse(packageInfo.version);
+    version(now.toString());
     awalan();
   }
 
@@ -62,18 +67,6 @@ class PortalController extends GetxController {
           args: {
             'step': '1',
           }));
-      // dataModel.add(PortalModel(
-      //     route: Routes.scanCaptureBox,
-      //     name: 'Change Needle',
-      //     tipe: 'image',
-      //     source: 'assets/img/changeNeedle.png',
-      //     visible: bChangeNeedle.value,
-      //     args: {
-      //       'dari': 'change-needle',
-      //       'title': "Change Needle\nScan and Camera Capture",
-      //       'halaman': 'scan-camera-capture-box',
-      //       'tipe': 'change',
-      //     }));
       dataModel.add(PortalModel(
           route: Routes.changeNeedle,
           name: 'Change Needle',

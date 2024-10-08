@@ -15,31 +15,46 @@ class PortalPage extends GetView<PortalController> {
         title: 'Dashboard',
         halaman: 'dashboard',
       ),
-      body: Container(
-        margin: controller.deviceType.value == 'tablet'
-            ? EdgeInsets.fromLTRB(Get.width * .1, Get.height * .1, Get.width * .1, Get.height * .1)
-            : EdgeInsets.fromLTRB(Get.width * .05, Get.height * .05, Get.width * .05, Get.height * .05),
-        decoration: BoxDecoration(
-          border: Border.all(color: Colors.black),
-          borderRadius: BorderRadius.circular(5),
-        ),
-        child: Obx(
-          () => GridView.builder(
-            shrinkWrap: true,
-            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
-              crossAxisSpacing: 4.0,
-              mainAxisSpacing: 4.0,
-              mainAxisExtent: controller.deviceType.value == 'tablet' ? 225 : 120,
+      body: Column(
+        children: [
+          Container(
+            margin: controller.deviceType.value == 'tablet'
+                ? EdgeInsets.fromLTRB(Get.width * .1, Get.height * .1, Get.width * .1, Get.height * .1)
+                : EdgeInsets.fromLTRB(Get.width * .05, Get.height * .05, Get.width * .05, Get.height * .05),
+            decoration: BoxDecoration(
+              border: Border.all(color: Colors.black),
+              borderRadius: BorderRadius.circular(5),
             ),
-            itemCount: controller.dataModel.where((e) => e.visible == true).length,
-            // itemCount: controller.dataModel.length,
-            itemBuilder: (context, index) {
-              final d = controller.dataModel.where((e) => e.visible == true).toList()[index];
-              return homeIcon(routename: d.route, tipe: d.tipe, source: d.source, name: d.name, visible: d.visible, argument: d.args);
-            },
+            child: Obx(
+              () => GridView.builder(
+                shrinkWrap: true,
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 4.0,
+                  mainAxisSpacing: 4.0,
+                  mainAxisExtent: controller.deviceType.value == 'tablet' ? 225 : 120,
+                ),
+                itemCount: controller.dataModel.where((e) => e.visible == true).length,
+                // itemCount: controller.dataModel.length,
+                itemBuilder: (context, index) {
+                  final d = controller.dataModel.where((e) => e.visible == true).toList()[index];
+                  return homeIcon(routename: d.route, tipe: d.tipe, source: d.source, name: d.name, visible: d.visible, argument: d.args);
+                },
+              ),
+            ),
           ),
-        ),
+          Obx(
+            () => Expanded(
+              child: Align(
+                alignment: Alignment.bottomRight,
+                child: Padding(
+                  padding: const EdgeInsets.all(5),
+                  child: Text(controller.version.value),
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

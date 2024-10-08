@@ -6,13 +6,15 @@ import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/global_widgets/notif.dart';
 import 'package:nemo/app/ui/utils/api.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
+import 'package:package_info_plus/package_info_plus.dart';
+import 'package:version/version.dart';
 
 class LoginController extends GetxController {
   var lemparan = Get.arguments;
   final apiReq = Api();
   final localShared = LocalShared();
   RxBool secureText = true.obs;
-  RxString password = "".obs, deviceType = "".obs;
+  RxString password = "".obs, deviceType = "".obs, version = "".obs;
 
   TextEditingController nik = TextEditingController();
 
@@ -39,9 +41,14 @@ class LoginController extends GetxController {
   }
 
   @override
-  void onReady() {
+  void onReady() async {
     super.onReady();
     deviceType(getDevice());
+
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    Version now = Version.parse(packageInfo.version);
+    version(now.toString());
+
     if (lemparan != null) {
       if (lemparan['koneksi'] == 'gagal') {
         notif('Please check connection');

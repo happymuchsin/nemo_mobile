@@ -2,24 +2,27 @@ import 'dart:async';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:dio/dio.dart';
-import 'package:easy_app_installer/easy_app_installer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:open_filex/open_filex.dart';
 import 'package:nemo/app/routes/routes.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
 import 'package:nemo/app/ui/global_widgets/notif.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
 import 'package:package_info_plus/package_info_plus.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:version/version.dart';
 
 class Api extends GetxController {
   final localShared = LocalShared();
   final dio = Dio();
   final CancelToken cancelToken = CancelToken();
+  var progressValue = 0.0.obs;
 
   List<String> liveEndpoints = [
+    'http://192.168.40.242/nemo/public/api/testcon',
     'http://192.168.40.185/nemo/public/api/testcon',
     'http://192.168.150.11/nemo/public/api/testcon',
     'http://192.168.1.7/nemo/public/api/testcon',
@@ -106,17 +109,7 @@ class Api extends GetxController {
         EasyLoading.dismiss();
         if (from == 'portal') {
           if (status == true) {
-            EasyAppInstaller.instance.downloadAndInstallApk(
-                fileUrl: "$a/update?app=nemo&version=${last.toString()}",
-                fileDirectory: "updateApk",
-                fileName: "nemo${last.toString()}.apk",
-                onDownloadingListener: (progress) {
-                  if (progress < 100) {
-                    EasyLoading.showProgress(progress / 100, status: "Downloading ...");
-                  } else {
-                    EasyLoading.showSuccess("Installing ...");
-                  }
-                });
+            networkInstallApk("$a/update?app=nemo&version=${last.toString()}", last);
           }
         } else {
           dialogCustomBody(
@@ -141,17 +134,7 @@ class Api extends GetxController {
                     ? ElevatedButton(
                         onPressed: () {
                           xdialog.dismiss();
-                          EasyAppInstaller.instance.downloadAndInstallApk(
-                              fileUrl: "$a/update?app=nemo&version=${last.toString()}",
-                              fileDirectory: "updateApk",
-                              fileName: "nemo${last.toString()}.apk",
-                              onDownloadingListener: (progress) {
-                                if (progress < 100) {
-                                  EasyLoading.showProgress(progress / 100, status: "Downloading ...");
-                                } else {
-                                  EasyLoading.showSuccess("Installing ...");
-                                }
-                              });
+                          networkInstallApk("$a/update?app=nemo&version=${last.toString()}", last);
                         },
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -207,6 +190,27 @@ class Api extends GetxController {
       EasyLoading.dismiss();
       notif(e.toString());
     }
+  }
+
+  networkInstallApk(url, last) async {
+    progressValue(0.0);
+    var appDocDir = await getTemporaryDirectory();
+    String savePath = '${appDocDir.path}/nemo$last.apk';
+    await Dio().download(url, savePath, onReceiveProgress: (count, total) {
+      final value = count / total;
+      if (progressValue.value != value) {
+        if (progressValue.value < 1.0) {
+          progressValue(count / total);
+          EasyLoading.showProgress(progressValue.value, status: 'Downloading ${(progressValue.value * 100).toStringAsFixed(0)} %');
+        } else {
+          progressValue(0.0);
+        }
+      }
+    });
+
+    EasyLoading.showSuccess('Installing ...');
+
+    await OpenFilex.open(savePath);
   }
 
   Future<void> login(data) async {

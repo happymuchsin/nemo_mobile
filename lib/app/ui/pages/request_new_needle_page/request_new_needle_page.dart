@@ -17,7 +17,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
     bool keyboardIsOpen = MediaQuery.of(context).viewInsets.bottom != 0;
     return PopScope(
       canPop: false,
-      onPopInvoked: (didPop) {
+      onPopInvokedWithResult: (didPop, result) {
         EasyLoading.dismiss();
         if (didPop) {
           return;
