@@ -22,10 +22,11 @@ class Api extends GetxController {
   var progressValue = 0.0.obs;
 
   List<String> liveEndpoints = [
-    'http://192.168.40.242/nemo/public/api/testcon',
-    'http://192.168.40.185/nemo/public/api/testcon',
-    'http://192.168.150.11/nemo/public/api/testcon',
-    'http://192.168.1.7/nemo/public/api/testcon',
+    'http://192.168.41.18/nemo/public/api/testcon',
+    // 'http://192.168.40.242/nemo/public/api/testcon',
+    // 'http://192.168.40.185/nemo/public/api/testcon',
+    // 'http://192.168.150.11/nemo/public/api/testcon',
+    // 'http://192.168.1.7/nemo/public/api/testcon',
   ];
 
   List<String> localEndpoints = [
