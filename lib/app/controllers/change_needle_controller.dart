@@ -403,12 +403,12 @@ class ChangeNeedleController extends GetxController {
   }
 
   Future<void> submit() async {
-    var next = 0;
+    var nsrf = 0, ncon = 0;
     if (sArea.value == 'SAMPLE ROOM') {
       if (sSrf.value == '') {
         notif('Please search SRF');
       } else {
-        next = 1;
+        nsrf = 1;
       }
     } else {
       if (sBuyer.value == '') {
@@ -418,7 +418,7 @@ class ChangeNeedleController extends GetxController {
       } else if (sStyle.value == '') {
         notif('Please select Style');
       } else {
-        next = 1;
+        nsrf = 1;
       }
     }
 
@@ -428,17 +428,17 @@ class ChangeNeedleController extends GetxController {
       } else if (sCondition.value == 'Good' && boxReturnCard.value == '') {
         notif('Please scan Box Return Card');
       } else {
-        next = 1;
+        ncon = 1;
       }
     } else {
       if (sApproval.value == '') {
         notif('Please select Request Approval To');
       } else {
-        next = 1;
+        ncon = 1;
       }
     }
 
-    if (next == 1) {
+    if (nsrf == 1 && ncon == 1) {
       EasyLoading.show();
       List<int> imageBytes = File(gambar.value!.path).readAsBytesSync();
       Map<String, dynamic> data = {};
