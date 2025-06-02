@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:nemo/app/data/models/approval_model.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
@@ -16,7 +17,14 @@ class ApprovalController extends GetxController {
   final apiReq = Api();
   final localShared = LocalShared();
   final dataList = <ApprovalModel>[].obs;
-  var deviceType = "".obs, sIdCard = "".obs, sBoxCard = "".obs, idCard = "".obs, boxCard = "".obs, sApproval = "".obs;
+  var deviceType = "".obs,
+      sIdCard = "".obs,
+      sBoxCard = "".obs,
+      idCard = "".obs,
+      boxCard = "".obs,
+      sApproval = "".obs,
+      timeScanRfid = "".obs,
+      timeScanBox = "".obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
   var lIdCard = [].obs, lBoxCard = [].obs;
 
@@ -130,11 +138,14 @@ class ApprovalController extends GetxController {
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/person', data);
     if (r['success'] == 200) {
+      timeScanRfid(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()));
       EasyLoading.dismiss();
       xdialog.dismiss();
       fIdCard.unfocus();
       scanBoxCard();
     } else {
+      timeScanRfid('');
+      timeScanBox('');
       EasyLoading.dismiss();
       notif(r['message']);
     }
@@ -191,6 +202,7 @@ class ApprovalController extends GetxController {
   }
 
   Future<void> scanBox() async {
+    timeScanBox(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()));
     EasyLoading.show();
     Map<String, dynamic> data = {};
     data['rfid'] = sBoxCard.value.toString();
@@ -200,6 +212,8 @@ class ApprovalController extends GetxController {
     data['tipe'] = 'approval';
     data['approval'] = sApproval.value;
     data['username'] = await localShared.baca('username');
+    data['scan_rfid'] = timeScanRfid.value;
+    data['scan_box'] = timeScanBox.value;
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/box', data);
     if (r['success'] == 200) {
@@ -215,6 +229,7 @@ class ApprovalController extends GetxController {
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
+      timeScanBox('');
     }
   }
 

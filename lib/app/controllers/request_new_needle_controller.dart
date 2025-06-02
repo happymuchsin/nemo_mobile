@@ -31,7 +31,9 @@ class RequestNewNeedleController extends GetxController {
       sArea = "".obs,
       sBuyer = "".obs,
       sSeason = "".obs,
-      sStyle = "".obs;
+      sStyle = "".obs,
+      timeScanRfid = "".obs,
+      timeScanBox = "".obs;
   var lIdCard = [].obs, lBoxCard = [].obs, lBuyer = [].obs, lSeason = [].obs, lStyle = [].obs;
   var fIdCard = FocusNode(), fBoxCard = FocusNode();
 
@@ -192,6 +194,7 @@ class RequestNewNeedleController extends GetxController {
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/person', data);
     if (r['success'] == 200) {
+      timeScanRfid(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()));
       EasyLoading.dismiss();
       xdialog.dismiss();
       tLine.text = r['data']['line'];
@@ -204,6 +207,8 @@ class RequestNewNeedleController extends GetxController {
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
+      timeScanRfid('');
+      timeScanBox('');
     }
   }
 
@@ -307,6 +312,7 @@ class RequestNewNeedleController extends GetxController {
     var a = await apiReq.baseUrl();
     var r = await apiReq.makeRequest('$a/card/box', data);
     if (r['success'] == 200) {
+      timeScanBox(DateFormat('yyyy-MM-dd HH:mm:ss').format(DateTime.now()));
       EasyLoading.dismiss();
       xdialog.dismiss();
       tBoxCard.text = r['data']['box']['rfid'];
@@ -320,6 +326,7 @@ class RequestNewNeedleController extends GetxController {
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
+      timeScanBox('');
     }
   }
 
@@ -359,6 +366,8 @@ class RequestNewNeedleController extends GetxController {
         data['reff'] = await localShared.baca('reff');
         data['area_id'] = await localShared.bacaInt('area_id');
         data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
+        data['scan_rfid'] = timeScanRfid.value;
+        data['scan_box'] = timeScanBox.value;
         var a = await apiReq.baseUrl();
         var r = await apiReq.makeRequest("$a/needle/save", data, second: 60);
         if (r['success'] == 200) {
