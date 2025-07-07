@@ -482,6 +482,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                                         ),
                                       ],
                                     ),
+                                    inputForm(false, 1, controller.tNote, 'Note'),
                                   ],
                                 ),
                               ),

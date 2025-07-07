@@ -55,6 +55,7 @@ class RequestNewNeedleController extends GetxController {
   var tBrand = TextEditingController();
   var tTipe = TextEditingController();
   var tSize = TextEditingController();
+  var tNote = TextEditingController();
 
   var pembantu = TextEditingController();
 
@@ -187,7 +188,7 @@ class RequestNewNeedleController extends GetxController {
     Map<String, dynamic> data = {};
     data['rfid'] = sIdCard.value.toString();
     if (kDebugMode) {
-      data['rfid'] = 'us1c1';
+      data['rfid'] = 'ul2c2';
     }
     data['area_id'] = await localShared.bacaInt('area_id');
     data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
@@ -353,6 +354,12 @@ class RequestNewNeedleController extends GetxController {
       if (boxCard.value == '') {
         notif('Please Scan New Box Card');
       } else {
+        if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 50) {
+          if (tNote.text == '') {
+            notif('Its been more than 50 seconds, Please insert Remarks');
+            return;
+          }
+        }
         EasyLoading.show();
         Map<String, dynamic> data = {};
         data['idCard'] = idCard.value;
@@ -368,6 +375,7 @@ class RequestNewNeedleController extends GetxController {
         data['lokasi_id'] = await localShared.bacaInt('lokasi_id');
         data['scan_rfid'] = timeScanRfid.value;
         data['scan_box'] = timeScanBox.value;
+        data['note'] = tNote.text;
         var a = await apiReq.baseUrl();
         var r = await apiReq.makeRequest("$a/needle/save", data, second: 60);
         if (r['success'] == 200) {

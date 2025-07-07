@@ -421,6 +421,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                                     ),
                                   ],
                                 ),
+                                inputForm(false, 1, controller.tNote, 'Note'),
                               ],
                             ),
                           ),
