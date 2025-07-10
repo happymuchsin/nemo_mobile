@@ -447,10 +447,12 @@ class ChangeNeedleController extends GetxController {
     }
 
     if (nsrf == 1 && ncon == 1) {
-      if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 50) {
-        if (tNote.text == '') {
-          notif('Its been more than 50 seconds, Please insert Remarks');
-          return;
+      if (timeScanRfid.value != '' && timeScanBox.value != '') {
+        if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 50) {
+          if (tNote.text == '') {
+            notif('Its been more than 50 seconds, Please insert Remarks');
+            return;
+          }
         }
       }
       EasyLoading.show();
