@@ -202,7 +202,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                                   Row(
                                     children: [
                                       Expanded(
-                                        child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.number),
+                                        child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.none),
                                       ),
                                       Expanded(
                                         child: Obx(
@@ -421,7 +421,7 @@ class RequestNewNeedlePage extends GetView<RequestNewNeedleController> {
                                     ),
                                   ],
                                 ),
-                                inputForm(false, 1, controller.tNote, 'Note'),
+                                inputForm(false, 1, controller.tNote, 'Note', inputType: TextInputType.none),
                               ],
                             ),
                           ),

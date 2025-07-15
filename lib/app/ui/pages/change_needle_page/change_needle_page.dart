@@ -263,7 +263,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                                       Row(
                                         children: [
                                           Expanded(
-                                            child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.number),
+                                            child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.none),
                                           ),
                                           Expanded(
                                             child: Obx(
@@ -482,7 +482,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                                         ),
                                       ],
                                     ),
-                                    inputForm(false, 1, controller.tNote, 'Note'),
+                                    inputForm(false, 1, controller.tNote, 'Note', inputType: TextInputType.none),
                                   ],
                                 ),
                               ),
@@ -582,7 +582,7 @@ class ChangeNeedlePage extends GetView<ChangeNeedleController> {
                                           Row(
                                             children: [
                                               Expanded(
-                                                child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.number),
+                                                child: inputForm(false, 1, controller.tDepan, '', inputType: TextInputType.none),
                                               ),
                                               Expanded(
                                                 child: Obx(

@@ -448,9 +448,9 @@ class ChangeNeedleController extends GetxController {
 
     if (nsrf == 1 && ncon == 1) {
       if (timeScanRfid.value != '' && timeScanBox.value != '') {
-        if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 50) {
+        if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 60) {
           if (tNote.text == '') {
-            notif('Its been more than 50 seconds, Please insert Remarks');
+            notif('Its been more than 60 seconds, Please insert Remarks');
             return;
           }
         }

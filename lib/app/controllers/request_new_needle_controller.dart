@@ -354,10 +354,12 @@ class RequestNewNeedleController extends GetxController {
       if (boxCard.value == '') {
         notif('Please Scan New Box Card');
       } else {
-        if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 50) {
-          if (tNote.text == '') {
-            notif('Its been more than 50 seconds, Please insert Remarks');
-            return;
+        if (timeScanRfid.value != '' && timeScanBox.value != '') {
+          if (DateTime.parse(timeScanRfid.value).difference(DateTime.parse(timeScanBox.value)).inSeconds < 60) {
+            if (tNote.text == '') {
+              notif('Its been more than 60 seconds, Please insert Remarks');
+              return;
+            }
           }
         }
         EasyLoading.show();
