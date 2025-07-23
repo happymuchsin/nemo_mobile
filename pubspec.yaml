@@ -19,7 +19,7 @@ publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # versionName = x.x.x
 # versionCode = YYMMddxx
-version: 1.2.2+25071501
+version: 1.2.3+25072301
 
 environment:
   sdk: ">=3.4.4 <4.0.0"

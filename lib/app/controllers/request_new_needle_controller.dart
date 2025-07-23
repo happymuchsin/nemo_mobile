@@ -3,13 +3,16 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nemo/app/ui/global_widgets/button.dart';
+import 'package:nemo/app/ui/global_widgets/decoration.dart';
 import 'package:nemo/app/ui/global_widgets/helper_screen.dart';
 import 'package:nemo/app/ui/global_widgets/needle.dart';
 import 'package:nemo/app/ui/global_widgets/notif.dart';
 import 'package:nemo/app/ui/utils/api.dart';
+import 'package:nemo/app/ui/utils/global_context.dart';
 import 'package:nemo/app/ui/utils/local_data.dart';
 
 class RequestNewNeedleController extends GetxController {
@@ -58,6 +61,8 @@ class RequestNewNeedleController extends GetxController {
   var tNote = TextEditingController();
 
   var pembantu = TextEditingController();
+
+  late AwesomeDialog hDialog;
 
   @override
   void onReady() async {
@@ -205,12 +210,56 @@ class RequestNewNeedleController extends GetxController {
       person(r['data']);
       idCard(r['data']['rfid']);
       fIdCard.unfocus();
+      historyNeedle(r['data']['history']);
     } else {
       EasyLoading.dismiss();
       notif(r['message']);
       timeScanRfid('');
       timeScanBox('');
     }
+  }
+
+  Future<void> historyNeedle(list) async {
+    hDialog = AwesomeDialog(
+      context: GlobalService.navigatorKey.currentState!.overlay!.context,
+      animType: AnimType.scale,
+      dialogType: DialogType.noHeader,
+      keyboardAware: true,
+      showCloseIcon: true,
+      closeIcon: const Icon(FontAwesomeIcons.x),
+      dismissOnTouchOutside: false,
+      body: Column(
+        children: [
+          modalTitle(text: 'History Needle'),
+          Row(
+            children: [
+              Expanded(flex: 2, child: Text('Brand', style: TextStyle(fontSize: deviceType.value == 'tablet' ? 30 : 18))),
+              Expanded(flex: 3, child: Text('Type', style: TextStyle(fontSize: deviceType.value == 'tablet' ? 30 : 18))),
+              Expanded(flex: 1, child: Text('Size', style: TextStyle(fontSize: deviceType.value == 'tablet' ? 30 : 18))),
+              Expanded(flex: 4, child: Text('Code', style: TextStyle(fontSize: deviceType.value == 'tablet' ? 30 : 18))),
+              Expanded(flex: 3, child: Text('Date Time', style: TextStyle(fontSize: deviceType.value == 'tablet' ? 30 : 18))),
+            ],
+          ),
+          ListView.builder(
+            physics: const NeverScrollableScrollPhysics(),
+            shrinkWrap: true,
+            itemCount: list.length,
+            itemBuilder: (context, index) {
+              final data = list[index];
+              return Row(
+                children: [
+                  Expanded(flex: 2, child: Text(data['brand'].toString(), style: TextStyle(fontSize: deviceType.value == 'tablet' ? 25 : 14))),
+                  Expanded(flex: 3, child: Text(data['tipe'].toString(), style: TextStyle(fontSize: deviceType.value == 'tablet' ? 25 : 14))),
+                  Expanded(flex: 1, child: Text(data['size'].toString(), style: TextStyle(fontSize: deviceType.value == 'tablet' ? 25 : 14))),
+                  Expanded(flex: 4, child: Text(data['code'].toString(), style: TextStyle(fontSize: deviceType.value == 'tablet' ? 25 : 14))),
+                  Expanded(flex: 3, child: Text(data['created_at'].toString(), style: TextStyle(fontSize: deviceType.value == 'tablet' ? 25 : 14))),
+                ],
+              );
+            },
+          ),
+        ],
+      ),
+    )..show();
   }
 
   Future<void> changeStatus(status) async {
